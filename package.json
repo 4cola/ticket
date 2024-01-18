@@ -21,7 +21,9 @@
     "@next/third-parties": "^14",
     "@headlessui/react": "latest",
     "@heroicons/react": "latest",
-    "zustand": "^4.4.7"
+    "zustand": "^4.4.7",
+    "@supabase/auth-ui-react": "^0.3.6",
+    "@supabase/auth-ui-shared": "0.1.4"
   },
   "devDependencies": {
     "@types/node": "^20",

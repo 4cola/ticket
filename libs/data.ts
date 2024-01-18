@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 11:53:24
+ * @LastEditTime: 2024-01-18 15:58:30
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -15,24 +15,6 @@ export type SPClient = SupabaseClient<Database>;
 export type { Database, Json };
 export { createClient };
 
-type site = {
-	domains: string[] | null;
-	id: number;
-	name: string;
-	short_name: string;
-	description: string;
-	avatar: string | null;
-	categories: {
-		slug: string;
-	}[];
-	config: {
-		header: Json;
-		footer: Json;
-		page_size: number;
-		email: string;
-	};
-} | null;
-
 export class Handler {
 	client: SPClient;
 
@@ -40,28 +22,41 @@ export class Handler {
 		this.client = client;
 	}
 
-	async getAppDataBy({ host }: { host: string }) {
-		const { data: site, error } = await this.client
-			.from('sites')
-			.select(
-				'domains,id,name,short_name,description,avatar,config:sites_configs(header,footer,page_size,email),categories:categories(slug)'
-			)
-			.contains('domains', [host])
-			.single<site>();
-		// if (error) throw error;
-		if (!site) {
-			throw new Error('no site');
+	async getAppConfig() {
+		const { data: configs, error } = await this.client.from('configs').select('key,value');
+    console.log(error)
+		if (configs) {
+			let config: { [key: string]: Json } = {};
+			for (const c of configs) {
+				config[c.key] = c.value;
+			}
+			return config as AppConfig;
 		}
-		return {
-			domain: host,
-			title: site.name,
-			featured_image: site.avatar,
-			description: site.description,
-			app_name: site.short_name,
-			categories: site.categories.map((c) => c.slug),
-			...site.config
-		} as AppData;
+		return null;
 	}
+
+	// async getAppDataBy({ host }: { host: string }) {
+	// 	const { data: site, error } = await this.client
+	// 		.from('sites')
+	// 		.select(
+	// 			'domains,id,name,short_name,description,avatar,config:sites_configs(header,footer,page_size,email),categories:categories(slug)'
+	// 		)
+	// 		.contains('domains', [host])
+	// 		.single<site>();
+	// 	// if (error) throw error;
+	// 	if (!site) {
+	// 		throw new Error('no site');
+	// 	}
+	// 	return {
+	// 		domain: host,
+	// 		title: site.name,
+	// 		featured_image: site.avatar,
+	// 		description: site.description,
+	// 		app_name: site.short_name,
+	// 		categories: site.categories.map((c) => c.slug),
+	// 		...site.config
+	// 	} as AppData;
+	// }
 
 	async getUser() {
 		const {
@@ -72,7 +67,7 @@ export class Handler {
 				user: {
 					id: user.id,
 					email: user.email,
-          avatar: user.user_metadata['avatar']
+					avatar: user.user_metadata['avatar']
 				}
 			};
 		}
@@ -417,12 +412,11 @@ export class Handler {
 }
 
 export function createSupaClient(props?: { url?: string; key?: string }) {
+  console.log(process.env.NEXT_PUBLIC_SUPABASE_URL)
+  console.log(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
 	const supabase = createClient<Database>(
 		props?.url || process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		props?.key || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-		{
-			global: { fetch }
-		}
+		props?.key || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 	);
 	return new Handler(supabase);
 }
