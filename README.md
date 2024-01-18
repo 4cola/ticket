@@ -1,8 +1,13 @@
 # ticket
 
+## nextjs blog based on
+- nextjs
+- supabase
+- tailwindcss
+
 <a href="https://demo-nextjs-with-supabase.vercel.app/">
   <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
+  <h1 align="center">nextjs blog based on</h1>
 </a>
 
 <p align="center">

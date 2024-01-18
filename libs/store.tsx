@@ -2,8 +2,8 @@
  * @Author: JinBlack
  * @Date: 2024-01-03 14:48:47
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-08 14:57:53
- * @FilePath: /4tmr/packages/next-shared/libs/store.tsx
+ * @LastEditTime: 2024-01-18 14:00:16
+ * @FilePath: /ticket/libs/store.tsx
  * @Description: dota2sites@gmail.com
  *
  * Copyright (c) 2024 by 4tmr, All Rights Reserved.
@@ -12,7 +12,7 @@
 import { useRef, useContext, createContext } from 'react'
 import { create, createStore, useStore } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { type SPClient, type Database } from '@4tmr/supabase';
+import { type SPClient, type Database } from './data';
 import { createBrowserClient } from '@supabase/ssr';
 
 export const useBrowserSupabase = create<SPClient>()((set) =>
