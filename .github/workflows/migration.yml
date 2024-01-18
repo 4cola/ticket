@@ -19,11 +19,11 @@ jobs:
       run: npm install supabase  # 或使用 yarn
     - name: Update denpendencies
       run: npm update supabase
-    # - name: Login Supabase
-    #   run: echo ${{ secrets.SUPABASE_ACCESS_TOKEN }} | npx supabase login
-    # - name: Link Supabase
-    #   run: npx supabase link --project-ref=${{ secrets.PROJECT_REF }}
-    # - name: Migration Supabase
-    #   run: npx supabase db push --password=${{ secrets.DATABASE_PASSWORD }}
+    - name: Login Supabase
+      run: echo ${{ secrets.SUPABASE_ACCESS_TOKEN }} | npx supabase login
+    - name: Link Supabase
+      run: npx supabase link --project-ref=elftoojqpqugfbgqxiww
+    - name: Migration Supabase
+      run: npx supabase db push --password=${{ secrets.DATABASE_PASSWORD }}
     # # - name: Deploy Supabase Functions
     # #   run: npx supabase functions deploy
