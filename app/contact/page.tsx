@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-11 16:31:45
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 15:47:38
+ * @LastEditTime: 2024-01-18 16:11:58
  * @FilePath: /ticket/app/contact/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -54,12 +54,7 @@ const Contact = (props: Props) => {
 };
 
 export default async function ContactPage() {
-	const handler = createSupaClient({ revalidate });
-	const appData = await handler.getAppData();
-	const friendLinks = (
-		await handler.getFriendLinks({
-			categories: ['r18', 'csgo', 'case', 'bet']
-		})
-	).filter((site) => !site.url_source.includes('4cola'));
-	return <Contact email={appData.email} friendLinks={friendLinks} />;
+	const client = createSupaClient();
+	const config = await client.getAppConfig();
+	return <Contact email={config.metas.email} friendLinks={[]} />;
 }

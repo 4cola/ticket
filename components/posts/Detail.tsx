@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-07-19 10:45:42
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 15:55:18
+ * @LastEditTime: 2024-01-18 16:16:09
  * @FilePath: /ticket/components/posts/Detail.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -12,8 +12,8 @@ import Link from 'next/link';
 import ClientHint from './ClientHint';
 import Article from './Article';
 import RowTags from '@/components/widgets/RowTags';
-import ClientImage from '@/public/ClientImage';
-import ReformattedHtml from '@/posts/ReformattedHtml';
+import ClientImage from '@/components/public/ClientImage';
+import ReformattedHtml from '@/components/posts/ReformattedHtml';
 
 function RelatedPosts(props: { relatedPosts?: PostLite[] }) {
 	const articles = props.relatedPosts?.slice(0, 6).map((post, i) => {
