@@ -2,12 +2,25 @@
  * @Author: JinBlack
  * @Date: 2023-10-23 14:49:55
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-04 11:14:03
- * @FilePath: /4tmr/packages/supabase/src/global.d.ts
+ * @LastEditTime: 2024-01-18 15:35:43
+ * @FilePath: /ticket/types/global.d.ts
  * @Description: dota2sites@gmail.com
  *
  * Copyright (c) 2023 by 4tmr, All Rights Reserved.
  */
+type AppConfig = {
+  metas: {
+    title: string
+    description: string
+    app_name: string
+    page_size: string
+    domain: string
+    email: string
+  }
+  header: Route[]
+  footer: Route[]
+}
+
 type AppData = {
   title: string;
   description: string;
