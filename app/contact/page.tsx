@@ -2,14 +2,14 @@
  * @Author: JinBlack
  * @Date: 2023-10-11 16:31:45
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 16:11:58
+ * @LastEditTime: 2024-01-18 16:47:18
  * @FilePath: /ticket/app/contact/page.tsx
  * @Description: dota2sites@gmail.com
  *
  * Copyright (c) 2023 by 4tmr, All Rights Reserved.
  */
 import Link from 'next/link';
-import { createSupaClient } from '@/libs/supabase';
+import { createSupaHandler } from '@/libs/supabase';
 import Article from '@/components/posts/Article';
 
 export const metadata = {
@@ -17,7 +17,7 @@ export const metadata = {
 	description: 'Contact and Business!'
 };
 
-export const revalidate = 3600 * 24 * 7;
+export const revalidate = 60;
 
 type Props = {
 	email: string;
@@ -54,7 +54,7 @@ const Contact = (props: Props) => {
 };
 
 export default async function ContactPage() {
-	const client = createSupaClient();
-	const config = await client.getAppConfig();
+	const handler = createSupaHandler();
+	const config = await handler.getAppConfig();
 	return <Contact email={config.metas.email} friendLinks={[]} />;
 }
