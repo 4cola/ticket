@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 15:58:30
+ * @LastEditTime: 2024-01-18 16:11:42
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -24,15 +24,12 @@ export class Handler {
 
 	async getAppConfig() {
 		const { data: configs, error } = await this.client.from('configs').select('key,value');
-    console.log(error)
-		if (configs) {
-			let config: { [key: string]: Json } = {};
-			for (const c of configs) {
-				config[c.key] = c.value;
-			}
-			return config as AppConfig;
+		if (error) throw error;
+		let config: { [key: string]: Json } = {};
+		for (const c of configs) {
+			config[c.key] = c.value;
 		}
-		return null;
+		return config as AppConfig;
 	}
 
 	// async getAppDataBy({ host }: { host: string }) {
@@ -411,9 +408,7 @@ export class Handler {
 	};
 }
 
-export function createSupaClient(props?: { url?: string; key?: string }) {
-  console.log(process.env.NEXT_PUBLIC_SUPABASE_URL)
-  console.log(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+export function createBrowserClient(props?: { url?: string; key?: string }) {
 	const supabase = createClient<Database>(
 		props?.url || process.env.NEXT_PUBLIC_SUPABASE_URL!,
 		props?.key || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!

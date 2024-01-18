@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-18 15:26:50
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 15:55:47
+ * @LastEditTime: 2024-01-18 16:12:12
  * @FilePath: /ticket/app/layout.tsx
  * @Description: black4jin@gmail.com
  *
@@ -61,17 +61,6 @@ export const viewport = {
 export default async function RootLayout(props: { children: React.ReactNode }) {
 	const client = createSupaClient();
 	const config = await client.getAppConfig();
-  console.log(config)
-  if (!config) {
-    return null
-  }
 	const { user } = await client.getUser();
 	return <Html {...props} appConfig={config} user={user} logo={null} banner={null} moreContents={null} hasLogin={true} />;
-	// return (
-	// 	<html lang="en" className={GeistSans.className}>
-	// 		<body className="bg-background text-foreground">
-	// 			<main className="min-h-screen flex flex-col items-center">{children}</main>
-	// 		</body>
-	// 	</html>
-	// );
 }

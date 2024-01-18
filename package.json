@@ -1,5 +1,10 @@
 {
-  "private": true,
+  "private": false,
+  "author": "JinBlack",
+  "keywords": [
+    "next",
+    "supabase"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +14,6 @@
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "autoprefixer": "^10",
-    "geist": "^1.0.0",
     "next": "^14",
     "postcss": "^8",
     "react": "^18",
@@ -17,13 +21,15 @@
     "tailwindcss": "^3.3.3",
     "typescript": "^5",
     "clsx": "^1.2.1",
+    "sharp": "^0.32.1",
     "nextjs-toploader": "^1.6.4",
     "@next/third-parties": "^14",
     "@headlessui/react": "latest",
     "@heroicons/react": "latest",
     "zustand": "^4.4.7",
     "@supabase/auth-ui-react": "^0.3.6",
-    "@supabase/auth-ui-shared": "0.1.4"
+    "@supabase/auth-ui-shared": "0.1.4",
+    "html-react-parser": "^5.0.6"
   },
   "devDependencies": {
     "@types/node": "^20",
