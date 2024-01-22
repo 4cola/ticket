@@ -3,7 +3,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-21 16:18:20
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-22 15:40:27
+ * @LastEditTime: 2024-01-22 17:28:56
  * @FilePath: /ticket/components/public/ClientImage.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -24,7 +24,7 @@ const ArticleListImage = (props: { src: string | null; className?: string; width
 	const [imageUrl, setImageUrl] = useState<string | StaticImageData>(src || placeholer);
 	return (
 		<Image
-			src={`/${imageUrl}`}
+			src={imageUrl}
 			placeholder={placeholderDataImage}
 			alt="post featured image"
 			priority={false}

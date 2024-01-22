@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-24 11:39:28
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-22 15:41:15
+ * @LastEditTime: 2024-01-22 16:59:04
  * @FilePath: /ticket/app/posts/[slug]/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -11,7 +11,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { createSupaHandler } from '@/libs/supabase';
-import R18Secrets from '@/components/secrets/R18Secrets';
 import Detail from '@/components/posts/Detail';
 
 type Props = {
@@ -33,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		title: post.title,
 		description: post.excerpt,
 		openGraph: {
-			// images: post.featured_image ?? 'https://img.v2dao.com/p.jpeg'
+			// images: post.featured_image ?? ''
 		}
 	};
 }
