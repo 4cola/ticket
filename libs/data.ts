@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-22 15:49:17
+ * @LastEditTime: 2024-01-22 16:44:17
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -196,7 +196,7 @@ export class Handler {
 			.eq('is_active', true)
 			.eq('slug', slug);
 		const { data: post, error } = await query.single<PostDetail>();
-		console.log(error);
+		// console.log(error);
 		return post;
 	};
 

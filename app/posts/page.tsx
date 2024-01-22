@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-23 14:49:55
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-22 15:30:19
+ * @LastEditTime: 2024-01-22 16:44:31
  * @FilePath: /ticket/app/posts/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -38,7 +38,6 @@ export default async function PostsPage(props: Props) {
 		// categories: categories,
 		// tags: tags
 	});
-  console.log(posts)
 	if (!posts) {
 		notFound();
 	}
