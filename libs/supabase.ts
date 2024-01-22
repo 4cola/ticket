@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-18 17:33:30
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 16:05:35
+ * @LastEditTime: 2024-01-18 17:29:06
  * @FilePath: /ticket/libs/supabase.ts
  * @Description: dota2sites@gmail.com
  *
@@ -43,10 +43,10 @@ function createClient(cookieStore: ReturnType<typeof cookies>) {
 	return supabase as SPClient;
 }
 
-function createSupaClient() {
+function createSupaHandler() {
 	const cookieStore = cookies();
 	const client = createClient(cookieStore);
 	return new Handler(client);
 }
 
-export { createSupaClient };
+export { createSupaHandler };

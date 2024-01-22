@@ -90,16 +90,12 @@ export interface Database {
           created_at: string
           excerpt: string
           featured_image: string | null
-          ghost_id: string | null
           html: string | null
           id: number
           is_active: boolean
-          is_cn: boolean
-          is_important: boolean
           keywords: string | null
           slug: string
           title: string
-          uid: string
           updated_at: string
           visited: number
         }
@@ -108,16 +104,12 @@ export interface Database {
           created_at?: string
           excerpt?: string
           featured_image?: string | null
-          ghost_id?: string | null
           html?: string | null
           id?: number
           is_active?: boolean
-          is_cn?: boolean
-          is_important?: boolean
           keywords?: string | null
           slug?: string
           title?: string
-          uid: string
           updated_at?: string
           visited?: number
         }
@@ -126,16 +118,12 @@ export interface Database {
           created_at?: string
           excerpt?: string
           featured_image?: string | null
-          ghost_id?: string | null
           html?: string | null
           id?: number
           is_active?: boolean
-          is_cn?: boolean
-          is_important?: boolean
           keywords?: string | null
           slug?: string
           title?: string
-          uid?: string
           updated_at?: string
           visited?: number
         }
@@ -179,19 +167,24 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "posts"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_categories_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "v_posts"
+            referencedColumns: ["id"]
           }
         ]
       }
       posts_raw: {
         Row: {
           author_id: string | null
-          categories: string[] | null
           created_at: string
           excerpt: string
           featured_image: string | null
           html: string | null
           id: number
-          is_cn: boolean
           is_verified: boolean
           keywords: string[] | null
           markdown: string | null
@@ -199,18 +192,15 @@ export interface Database {
           secrets: Json | null
           slug: string | null
           source: string | null
-          tags: string[] | null
           title: string
         }
         Insert: {
           author_id?: string | null
-          categories?: string[] | null
           created_at?: string
           excerpt?: string
           featured_image?: string | null
           html?: string | null
           id?: number
-          is_cn?: boolean
           is_verified?: boolean
           keywords?: string[] | null
           markdown?: string | null
@@ -218,18 +208,15 @@ export interface Database {
           secrets?: Json | null
           slug?: string | null
           source?: string | null
-          tags?: string[] | null
           title?: string
         }
         Update: {
           author_id?: string | null
-          categories?: string[] | null
           created_at?: string
           excerpt?: string
           featured_image?: string | null
           html?: string | null
           id?: number
-          is_cn?: boolean
           is_verified?: boolean
           keywords?: string[] | null
           markdown?: string | null
@@ -237,7 +224,6 @@ export interface Database {
           secrets?: Json | null
           slug?: string | null
           source?: string | null
-          tags?: string[] | null
           title?: string
         }
         Relationships: [
@@ -253,6 +239,13 @@ export interface Database {
             columns: ["post_id"]
             isOneToOne: true
             referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_raw_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "v_posts"
             referencedColumns: ["id"]
           }
         ]
@@ -286,38 +279,12 @@ export interface Database {
             isOneToOne: true
             referencedRelation: "posts"
             referencedColumns: ["id"]
-          }
-        ]
-      }
-      posts_sites: {
-        Row: {
-          created_at: string
-          post_id: number
-          site_id: number
-        }
-        Insert: {
-          created_at?: string
-          post_id: number
-          site_id: number
-        }
-        Update: {
-          created_at?: string
-          post_id?: number
-          site_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "posts_sites_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "posts_sites_site_id_fkey"
-            columns: ["site_id"]
-            isOneToOne: false
-            referencedRelation: "sites"
+            foreignKeyName: "posts_secrets_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "v_posts"
             referencedColumns: ["id"]
           }
         ]
@@ -347,144 +314,17 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "posts_tags_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "v_posts"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "posts_tags_tag_id_fkey"
             columns: ["tag_id"]
             isOneToOne: false
             referencedRelation: "tags"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      sites: {
-        Row: {
-          alias: string[] | null
-          avatar: string | null
-          background_style: Json
-          banner: string | null
-          created_at: string
-          description: string
-          description_cn: string
-          domains: string[] | null
-          id: number
-          is_active: boolean
-          is_cn: boolean
-          is_lower_priority: boolean
-          is_recommended: boolean
-          is_secondary_domain: boolean
-          keywords: string
-          name: string
-          name_cn: string
-          order: number
-          rating: number
-          short_description: string
-          short_description_cn: string
-          short_name: string | null
-          sides_image: string | null
-          square_image: string | null
-          type: Database["public"]["Enums"]["type"]
-          uid: string
-          updated_at: string
-          url_source: string
-        }
-        Insert: {
-          alias?: string[] | null
-          avatar?: string | null
-          background_style?: Json
-          banner?: string | null
-          created_at?: string
-          description?: string
-          description_cn?: string
-          domains?: string[] | null
-          id?: number
-          is_active?: boolean
-          is_cn?: boolean
-          is_lower_priority?: boolean
-          is_recommended?: boolean
-          is_secondary_domain?: boolean
-          keywords?: string
-          name?: string
-          name_cn?: string
-          order?: number
-          rating?: number
-          short_description?: string
-          short_description_cn?: string
-          short_name?: string | null
-          sides_image?: string | null
-          square_image?: string | null
-          type?: Database["public"]["Enums"]["type"]
-          uid: string
-          updated_at?: string
-          url_source?: string
-        }
-        Update: {
-          alias?: string[] | null
-          avatar?: string | null
-          background_style?: Json
-          banner?: string | null
-          created_at?: string
-          description?: string
-          description_cn?: string
-          domains?: string[] | null
-          id?: number
-          is_active?: boolean
-          is_cn?: boolean
-          is_lower_priority?: boolean
-          is_recommended?: boolean
-          is_secondary_domain?: boolean
-          keywords?: string
-          name?: string
-          name_cn?: string
-          order?: number
-          rating?: number
-          short_description?: string
-          short_description_cn?: string
-          short_name?: string | null
-          sides_image?: string | null
-          square_image?: string | null
-          type?: Database["public"]["Enums"]["type"]
-          uid?: string
-          updated_at?: string
-          url_source?: string
-        }
-        Relationships: []
-      }
-      sites_configs: {
-        Row: {
-          created_at: string
-          email: string
-          footer: Json
-          header: Json
-          id: number
-          page_size: number
-          site_id: number
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          email?: string
-          footer?: Json
-          header?: Json
-          id?: number
-          page_size?: number
-          site_id: number
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          footer?: Json
-          header?: Json
-          id?: number
-          page_size?: number
-          site_id?: number
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "sites_configs_site_id_fkey"
-            columns: ["site_id"]
-            isOneToOne: true
-            referencedRelation: "sites"
             referencedColumns: ["id"]
           }
         ]
@@ -497,7 +337,6 @@ export interface Database {
           id: number
           is_active: boolean
           name: string
-          name_cn: string
           order: number
           slug: string
           updated_at: string
@@ -509,7 +348,6 @@ export interface Database {
           id?: number
           is_active?: boolean
           name?: string
-          name_cn?: string
           order?: number
           slug: string
           updated_at?: string
@@ -521,7 +359,6 @@ export interface Database {
           id?: number
           is_active?: boolean
           name?: string
-          name_cn?: string
           order?: number
           slug?: string
           updated_at?: string
@@ -530,7 +367,22 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      v_posts: {
+        Row: {
+          categories: string[] | null
+          created_at: string | null
+          excerpt: string | null
+          featured_image: string | null
+          html: string | null
+          id: number | null
+          is_active: boolean | null
+          slug: string | null
+          tags: string[] | null
+          title: string | null
+          updated_at: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       generate_uid: {

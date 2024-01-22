@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-18 15:26:50
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 16:12:12
+ * @LastEditTime: 2024-01-18 17:29:26
  * @FilePath: /ticket/app/layout.tsx
  * @Description: black4jin@gmail.com
  *
@@ -10,7 +10,7 @@
  */
 import '@/assets/css/globals.css';
 import type { Metadata } from 'next';
-import { createSupaClient } from '@/libs/supabase';
+import { createSupaHandler } from '@/libs/supabase';
 import Html from '@/components/layouts/Html';
 
 export const dynamic = 'auto';
@@ -20,7 +20,7 @@ export const runtime = 'nodejs';
 export const preferredRegion = 'global';
 
 export const generateMetadata = async (): Promise<Metadata> => {
-	const config = await createSupaClient().getAppConfig();
+	const config = await createSupaHandler().getAppConfig();
 	if (config) {
 		const { title, description, app_name, domain } = config.metas;
 		const domainURL = `https://${domain}`;
@@ -59,8 +59,8 @@ export const viewport = {
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
-	const client = createSupaClient();
-	const config = await client.getAppConfig();
-	const { user } = await client.getUser();
+	const handler = createSupaHandler();
+	const config = await handler.getAppConfig();
+	const { user } = await handler.getUser();
 	return <Html {...props} appConfig={config} user={user} logo={null} banner={null} moreContents={null} hasLogin={true} />;
 }

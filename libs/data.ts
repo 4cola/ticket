@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 16:11:42
+ * @LastEditTime: 2024-01-22 14:38:40
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -144,97 +144,32 @@ export class Handler {
 		return site;
 	};
 
-	getSite = async (props: { isChinese?: boolean; shortName: string }) => {
-		const defaultValue = {
-			isChinese: true
-		};
-		const { isChinese, shortName } = {
-			...defaultValue,
-			...props
-		};
-		const bonusKey = !isChinese ? 'bonus' : 'bonus:bonus_cn';
-		const tagKey = !isChinese ? 'name' : 'name:name_cn';
-		const langKeys = isChinese
-			? 'name:name_cn,bonus:bonus_cn,description:description_cn,short_description:short_description_cn'
-			: 'name,bonus,description,short_description';
-		const { data: site, error } = await this.client
-			.from('v_sites')
-			.select(
-				`
-        uid,
-        code,
-        short_name,
-        avatar,
-        banner,
-        rating,
-        keywords,
-        ${langKeys},
-        promos(
-          uid,
-          code,
-          ${bonusKey}
-        ),
-        tags(
-          ${tagKey},
-          slug
-        ),
-        posts!posts_sites(
-          title,
-          excerpt,
-          slug
-        ),
-        detail_posts:posts!sites_detail_posts(
-          title,
-          html
-        ),
-        is_cn
-      `
-			)
-			.eq('short_name', shortName)
-			.limit(20, { foreignTable: 'posts' })
-			.order('id', { referencedTable: 'posts', ascending: false })
-			.single<SiteDetail>();
-		return site;
-	};
-
 	async getPosts(props?: {
 		page?: number;
-		tag?: string;
-		category?: string;
 		pageSize?: number;
-		categories?: string[];
-		is_important?: boolean;
-		isChinese?: boolean;
+		category?: string;
+    tag?: string
 	}) {
 		const defaultValue = {
 			page: 1,
 			pageSize: 10,
-			is_important: false,
-			isChinese: true
 		};
-		const { page, pageSize, tag, category, categories, is_important, isChinese } = {
+		const { page, pageSize, tag, category } = {
 			...defaultValue,
 			...props
 		};
-		const tagKey = !isChinese ? 'name' : 'name:name_cn';
-		let select = 'title, excerpt, slug, ghost_id, featured_image, created_at';
-		if (tag) {
-			select = `${select},tags!inner(${tagKey},slug)`;
-		}
-		let query = this.client.from('v_posts').select(select, {
+		let select = 'title, excerpt, slug, featured_image, created_at';
+		// if (tag) {
+		// 	select = `${select},tags!inner(name,slug)`;
+		// }
+    let query = this.client.from('v_posts').select(select, {
 			count: 'exact'
 		});
-		if (tag) {
-			query = query.eq('tags.slug', tag);
-		}
-		if (category) {
-			query = query.contains('categories', [category]);
-		}
-		if (categories) {
-			query = query.containedBy('categories', categories);
-		}
-		if (is_important) {
-			query = query.eq('is_important', true);
+    if (tag) {
+      query = query.contains('tags', tag)
+    }
+    if (category) {
+			query = query.contains('categories', category);
 		}
 		const {
 			data: posts,
@@ -327,27 +262,22 @@ export class Handler {
 		return tag;
 	};
 
-	getTags = async (props: { categories: string[]; isChinese?: boolean; is_important?: boolean }) => {
+	getTags = async (props: { count: number, filter: number }) => {
 		const defaultValue = {
-			isChinese: true,
-			is_important: false
+      filter: 5,
+			count: 50
 		};
-		const { categories, isChinese, is_important } = {
+		const { count, filter } = {
 			...defaultValue,
 			...props
 		};
-		const langKeys = isChinese ? 'name:name_cn' : 'name';
 		let query = this.client
 			.from('tags')
-			.select(`${langKeys}, slug, v_posts!inner(categories)`)
-			.containedBy('v_posts.categories', categories)
-			.eq('v_posts.is_cn', isChinese)
-			.gt('count', 5)
+			.select(`name, slug`)
+      .eq('is_active', true)
+			.gt('count', filter)
 			.order('count', { ascending: false })
-			.limit(36);
-		if (is_important) {
-			query = query.eq('posts.is_important', true);
-		}
+			.limit(count);
 		const { data: tags, error } = await query;
 		return tags || [];
 	};

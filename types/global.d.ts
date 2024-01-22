@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-23 14:49:55
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 15:35:43
+ * @LastEditTime: 2024-01-18 17:12:52
  * @FilePath: /ticket/types/global.d.ts
  * @Description: dota2sites@gmail.com
  *
@@ -13,7 +13,7 @@ type AppConfig = {
     title: string
     description: string
     app_name: string
-    page_size: string
+    page_size: number
     domain: string
     email: string
   }
