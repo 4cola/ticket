@@ -2,7 +2,7 @@
  # @Author: JinBlack
  # @Date: 2024-01-18 14:49:39
  # @LastEditors: JinBlack
- # @LastEditTime: 2024-01-18 14:49:39
+ # @LastEditTime: 2024-01-22 15:15:31
  # @FilePath: /ticket/supabase/commands.sh
  # @Description: black4jin@gmail.com
  #
@@ -10,3 +10,5 @@
 ###
 
 supabase gen types typescript --local --schema public > ../types/supabase.ts
+
+supabase migration squash --linked
