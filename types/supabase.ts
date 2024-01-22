@@ -167,6 +167,13 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "posts"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_categories_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "v_posts"
+            referencedColumns: ["id"]
           }
         ]
       }
@@ -233,6 +240,13 @@ export interface Database {
             isOneToOne: true
             referencedRelation: "posts"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_raw_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "v_posts"
+            referencedColumns: ["id"]
           }
         ]
       }
@@ -265,6 +279,13 @@ export interface Database {
             isOneToOne: true
             referencedRelation: "posts"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_secrets_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "v_posts"
+            referencedColumns: ["id"]
           }
         ]
       }
@@ -290,6 +311,13 @@ export interface Database {
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_tags_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "v_posts"
             referencedColumns: ["id"]
           },
           {
@@ -339,7 +367,22 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      v_posts: {
+        Row: {
+          categories: string[] | null
+          created_at: string | null
+          excerpt: string | null
+          featured_image: string | null
+          html: string | null
+          id: number | null
+          is_active: boolean | null
+          slug: string | null
+          tags: string[] | null
+          title: string | null
+          updated_at: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       generate_uid: {

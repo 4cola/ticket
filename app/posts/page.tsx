@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-23 14:49:55
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 17:29:42
+ * @LastEditTime: 2024-01-22 14:34:52
  * @FilePath: /ticket/app/posts/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -33,6 +33,8 @@ export default async function PostsPage(props: Props) {
 	const { posts, count, page_size } = await handler.getPosts({
 		page: currentPage,
     pageSize: config.metas.page_size,
+    category,
+    tag
 		// categories: categories,
 		// tags: tags
 	});

@@ -1,0 +1,167 @@
+drop trigger if exists "update_tag_count_trigger" on "public"."posts_tags";
+
+drop policy "Enable read access for all users" on "public"."posts_categories";
+
+drop policy "Enable read access for all users" on "public"."posts_tags";
+
+revoke delete on table "public"."posts_categories" from "anon";
+
+revoke insert on table "public"."posts_categories" from "anon";
+
+revoke references on table "public"."posts_categories" from "anon";
+
+revoke select on table "public"."posts_categories" from "anon";
+
+revoke trigger on table "public"."posts_categories" from "anon";
+
+revoke truncate on table "public"."posts_categories" from "anon";
+
+revoke update on table "public"."posts_categories" from "anon";
+
+revoke delete on table "public"."posts_categories" from "authenticated";
+
+revoke insert on table "public"."posts_categories" from "authenticated";
+
+revoke references on table "public"."posts_categories" from "authenticated";
+
+revoke select on table "public"."posts_categories" from "authenticated";
+
+revoke trigger on table "public"."posts_categories" from "authenticated";
+
+revoke truncate on table "public"."posts_categories" from "authenticated";
+
+revoke update on table "public"."posts_categories" from "authenticated";
+
+revoke delete on table "public"."posts_categories" from "service_role";
+
+revoke insert on table "public"."posts_categories" from "service_role";
+
+revoke references on table "public"."posts_categories" from "service_role";
+
+revoke select on table "public"."posts_categories" from "service_role";
+
+revoke trigger on table "public"."posts_categories" from "service_role";
+
+revoke truncate on table "public"."posts_categories" from "service_role";
+
+revoke update on table "public"."posts_categories" from "service_role";
+
+revoke delete on table "public"."posts_tags" from "anon";
+
+revoke insert on table "public"."posts_tags" from "anon";
+
+revoke references on table "public"."posts_tags" from "anon";
+
+revoke select on table "public"."posts_tags" from "anon";
+
+revoke trigger on table "public"."posts_tags" from "anon";
+
+revoke truncate on table "public"."posts_tags" from "anon";
+
+revoke update on table "public"."posts_tags" from "anon";
+
+revoke delete on table "public"."posts_tags" from "authenticated";
+
+revoke insert on table "public"."posts_tags" from "authenticated";
+
+revoke references on table "public"."posts_tags" from "authenticated";
+
+revoke select on table "public"."posts_tags" from "authenticated";
+
+revoke trigger on table "public"."posts_tags" from "authenticated";
+
+revoke truncate on table "public"."posts_tags" from "authenticated";
+
+revoke update on table "public"."posts_tags" from "authenticated";
+
+revoke delete on table "public"."posts_tags" from "service_role";
+
+revoke insert on table "public"."posts_tags" from "service_role";
+
+revoke references on table "public"."posts_tags" from "service_role";
+
+revoke select on table "public"."posts_tags" from "service_role";
+
+revoke trigger on table "public"."posts_tags" from "service_role";
+
+revoke truncate on table "public"."posts_tags" from "service_role";
+
+revoke update on table "public"."posts_tags" from "service_role";
+
+alter table "public"."posts_categories" drop constraint "posts_categories_category_id_fkey";
+
+alter table "public"."posts_categories" drop constraint "posts_categories_post_id_fkey";
+
+alter table "public"."posts_raw" drop constraint "posts_raw_post_id_fkey";
+
+alter table "public"."posts_raw" drop constraint "posts_raw_post_id_key";
+
+alter table "public"."posts_secrets" drop constraint "posts_secrets_post_id_fkey";
+
+alter table "public"."posts_secrets" drop constraint "unique_post_id";
+
+alter table "public"."posts_tags" drop constraint "posts_tags_post_id_fkey";
+
+alter table "public"."posts_tags" drop constraint "posts_tags_tag_id_fkey";
+
+drop function if exists "public"."create_tags_name_cn"();
+
+drop function if exists "public"."generate_uid"();
+
+alter table "public"."posts" drop constraint "Post_pkey";
+
+alter table "public"."posts_categories" drop constraint "posts_categories_pkey";
+
+alter table "public"."posts_tags" drop constraint "posts_tags_pkey";
+
+drop index if exists "public"."Post_pkey";
+
+drop index if exists "public"."posts_categories_pkey";
+
+drop index if exists "public"."posts_raw_post_id_key";
+
+drop index if exists "public"."posts_tags_pkey";
+
+drop index if exists "public"."unique_post_id";
+
+drop table "public"."posts_categories";
+
+drop table "public"."posts_tags";
+
+alter table "public"."categories" add column "updated_at" timestamp with time zone not null default now();
+
+alter table "public"."images" drop column "hash";
+
+alter table "public"."images" add column "object_id" uuid;
+
+alter table "public"."images" add column "updated_at" timestamp with time zone not null default now();
+
+alter table "public"."images" alter column "id" drop default;
+
+alter table "public"."images" alter column "id" add generated by default as identity;
+
+alter table "public"."posts" drop column "visited";
+
+alter table "public"."posts" alter column "id" set default gen_random_uuid();
+
+alter table "public"."posts" alter column "id" drop identity;
+
+alter table "public"."posts" alter column "id" set data type uuid using "id"::uuid;
+
+alter table "public"."posts_raw" drop column "post_id";
+
+alter table "public"."posts_secrets" drop column "post_id";
+
+alter table "public"."tags" alter column "id" drop default;
+
+alter table "public"."tags" alter column "id" add generated by default as identity;
+
+drop sequence if exists "public"."posts_id_seq";
+
+CREATE UNIQUE INDEX posts_pkey ON public.posts USING btree (id);
+
+alter table "public"."posts" add constraint "posts_pkey" PRIMARY KEY using index "posts_pkey";
+
+alter table "public"."images" add constraint "images_object_id_fkey" FOREIGN KEY (object_id) REFERENCES storage.objects(id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
+
+alter table "public"."images" validate constraint "images_object_id_fkey";

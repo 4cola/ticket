@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 17:15:49
+ * @LastEditTime: 2024-01-22 14:38:40
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -162,12 +162,15 @@ export class Handler {
 		// if (tag) {
 		// 	select = `${select},tags!inner(name,slug)`;
 		// }
-    let query = this.client.from('posts').select(select, {
+    let query = this.client.from('v_posts').select(select, {
 			count: 'exact'
 		});
-    // if (category) {
-		// 	// query = query.contains('categories', categories);
-		// }
+    if (tag) {
+      query = query.contains('tags', tag)
+    }
+    if (category) {
+			query = query.contains('categories', category);
+		}
 		const {
 			data: posts,
 			count,
