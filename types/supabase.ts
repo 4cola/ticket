@@ -16,6 +16,7 @@ export interface Database {
           id: number
           name: string
           slug: string
+          updated_at: string
         }
         Insert: {
           created_at?: string
@@ -23,6 +24,7 @@ export interface Database {
           id?: number
           name?: string
           slug: string
+          updated_at?: string
         }
         Update: {
           created_at?: string
@@ -30,6 +32,7 @@ export interface Database {
           id?: number
           name?: string
           slug?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -61,28 +64,39 @@ export interface Database {
         Row: {
           created_at: string
           description: string
-          hash: string | null
           id: number
+          object_id: string | null
           source: string | null
+          updated_at: string
           url: string
         }
         Insert: {
           created_at?: string
           description?: string
-          hash?: string | null
           id?: number
+          object_id?: string | null
           source?: string | null
+          updated_at?: string
           url?: string
         }
         Update: {
           created_at?: string
           description?: string
-          hash?: string | null
           id?: number
+          object_id?: string | null
           source?: string | null
+          updated_at?: string
           url?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "images_object_id_fkey"
+            columns: ["object_id"]
+            isOneToOne: false
+            referencedRelation: "objects"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       posts: {
         Row: {
@@ -91,13 +105,12 @@ export interface Database {
           excerpt: string
           featured_image: string | null
           html: string | null
-          id: number
+          id: string
           is_active: boolean
           keywords: string | null
           slug: string
           title: string
           updated_at: string
-          visited: number
         }
         Insert: {
           author_id?: string | null
@@ -105,13 +118,12 @@ export interface Database {
           excerpt?: string
           featured_image?: string | null
           html?: string | null
-          id?: number
+          id?: string
           is_active?: boolean
           keywords?: string | null
           slug?: string
           title?: string
           updated_at?: string
-          visited?: number
         }
         Update: {
           author_id?: string | null
@@ -119,13 +131,12 @@ export interface Database {
           excerpt?: string
           featured_image?: string | null
           html?: string | null
-          id?: number
+          id?: string
           is_active?: boolean
           keywords?: string | null
           slug?: string
           title?: string
           updated_at?: string
-          visited?: number
         }
         Relationships: [
           {
@@ -141,17 +152,17 @@ export interface Database {
         Row: {
           category_id: number
           created_at: string
-          post_id: number
+          post_id: string
         }
         Insert: {
           category_id: number
           created_at?: string
-          post_id: number
+          post_id: string
         }
         Update: {
           category_id?: number
           created_at?: string
-          post_id?: number
+          post_id?: string
         }
         Relationships: [
           {
@@ -188,7 +199,6 @@ export interface Database {
           is_verified: boolean
           keywords: string[] | null
           markdown: string | null
-          post_id: number | null
           secrets: Json | null
           slug: string | null
           source: string | null
@@ -204,7 +214,6 @@ export interface Database {
           is_verified?: boolean
           keywords?: string[] | null
           markdown?: string | null
-          post_id?: number | null
           secrets?: Json | null
           slug?: string | null
           source?: string | null
@@ -220,7 +229,6 @@ export interface Database {
           is_verified?: boolean
           keywords?: string[] | null
           markdown?: string | null
-          post_id?: number | null
           secrets?: Json | null
           slug?: string | null
           source?: string | null
@@ -233,20 +241,6 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_raw_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: true
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_raw_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: true
-            referencedRelation: "v_posts"
-            referencedColumns: ["id"]
           }
         ]
       }
@@ -255,54 +249,36 @@ export interface Database {
           created_at: string
           data: Json | null
           id: number
-          post_id: number
           version: string | null
         }
         Insert: {
           created_at?: string
           data?: Json | null
           id?: number
-          post_id: number
           version?: string | null
         }
         Update: {
           created_at?: string
           data?: Json | null
           id?: number
-          post_id?: number
           version?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "posts_secrets_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: true
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_secrets_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: true
-            referencedRelation: "v_posts"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       posts_tags: {
         Row: {
           created_at: string
-          post_id: number
+          post_id: string
           tag_id: number
         }
         Insert: {
           created_at?: string
-          post_id: number
+          post_id: string
           tag_id: number
         }
         Update: {
           created_at?: string
-          post_id?: number
+          post_id?: string
           tag_id?: number
         }
         Relationships: [
@@ -374,7 +350,7 @@ export interface Database {
           excerpt: string | null
           featured_image: string | null
           html: string | null
-          id: number | null
+          id: string | null
           is_active: boolean | null
           slug: string | null
           tags: string[] | null
@@ -385,10 +361,7 @@ export interface Database {
       }
     }
     Functions: {
-      generate_uid: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      [_ in never]: never
     }
     Enums: {
       ads_position: "sides" | "banner" | "right-sticky"

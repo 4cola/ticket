@@ -3,8 +3,8 @@
  * @Author: JinBlack
  * @Date: 2023-12-21 16:18:20
  * @LastEditors: JinBlack
- * @LastEditTime: 2023-12-21 16:21:14
- * @FilePath: /4tmr/packages/next-shared/components/public/ClientImage.tsx
+ * @LastEditTime: 2024-01-22 15:40:27
+ * @FilePath: /ticket/components/public/ClientImage.tsx
  * @Description: dota2sites@gmail.com
  *
  * Copyright (c) 2023 by 4tmr, All Rights Reserved.
@@ -24,7 +24,7 @@ const ArticleListImage = (props: { src: string | null; className?: string; width
 	const [imageUrl, setImageUrl] = useState<string | StaticImageData>(src || placeholer);
 	return (
 		<Image
-			src={imageUrl}
+			src={`/${imageUrl}`}
 			placeholder={placeholderDataImage}
 			alt="post featured image"
 			priority={false}

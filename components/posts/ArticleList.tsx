@@ -2,8 +2,8 @@
  * @Author: JinBlack
  * @Date: 2023-12-21 16:03:26
  * @LastEditors: JinBlack
- * @LastEditTime: 2023-12-28 11:38:09
- * @FilePath: /4tmr/packages/next-shared/components/posts/ArticleList.tsx
+ * @LastEditTime: 2024-01-22 15:29:58
+ * @FilePath: /ticket/components/posts/ArticleList.tsx
  * @Description: dota2sites@gmail.com
  *
  * Copyright (c) 2023 by 4tmr, All Rights Reserved.
@@ -12,9 +12,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import ClientImage from '../public/ClientImage';
 
-export type ArticleType = Omit<PostLite, 'ghost_id' | 'tags'>;
-
-const Article = ({ post }: { post: ArticleType }) => {
+const Article = ({ post }: { post: PostLite }) => {
 	return (
 		<Link className="relative block py-4 lg:py-8" title={post.title} href={`/posts/${post.slug}`} prefetch={false}>
 			<article className="isolate flex flex-col gap-4 lg:gap-8 lg:flex-row group">
@@ -71,7 +69,7 @@ const Article = ({ post }: { post: ArticleType }) => {
 	);
 };
 
-const ArticleList = ({ posts, className }: { posts?: ArticleType[] | null; className?: string }) => {
+const ArticleList = ({ posts, className }: { posts?: PostLite[] | null; className?: string }) => {
 	return (
 		<div role="list" className={clsx('divide-y divide-gray-200', className)}>
 			{posts?.map((post, i) => <Article key={i} post={post} />)}

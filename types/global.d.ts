@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-23 14:49:55
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 17:12:52
+ * @LastEditTime: 2024-01-22 15:49:03
  * @FilePath: /ticket/types/global.d.ts
  * @Description: dota2sites@gmail.com
  *
@@ -110,17 +110,14 @@ type PostLite = {
   title: string;
   excerpt: string;
   slug: string;
-  ghost_id: string
   featured_image: string | null;
   created_at: string;
-  tags?: Tag[];
+  tags: Tag[]
 };
 
 type PostDetail = {
   html: string | null;
-  sites: PostSite[];
   categories: string[]
-  secrets: Secret[] | null
 } & PostLite;
 
 type FriendLink = {
