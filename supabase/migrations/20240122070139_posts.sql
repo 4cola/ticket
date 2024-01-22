@@ -1,179 +1,426 @@
-drop trigger if exists "update_tag_count_trigger" on "public"."posts_tags";
 
-drop policy "Enable read access for all users" on "public"."posts_categories";
-
-drop policy "Enable read access for all users" on "public"."posts_tags";
-
-revoke delete on table "public"."posts_categories" from "anon";
-
-revoke insert on table "public"."posts_categories" from "anon";
-
-revoke references on table "public"."posts_categories" from "anon";
-
-revoke select on table "public"."posts_categories" from "anon";
-
-revoke trigger on table "public"."posts_categories" from "anon";
-
-revoke truncate on table "public"."posts_categories" from "anon";
-
-revoke update on table "public"."posts_categories" from "anon";
-
-revoke delete on table "public"."posts_categories" from "authenticated";
-
-revoke insert on table "public"."posts_categories" from "authenticated";
-
-revoke references on table "public"."posts_categories" from "authenticated";
-
-revoke select on table "public"."posts_categories" from "authenticated";
-
-revoke trigger on table "public"."posts_categories" from "authenticated";
-
-revoke truncate on table "public"."posts_categories" from "authenticated";
-
-revoke update on table "public"."posts_categories" from "authenticated";
-
-revoke delete on table "public"."posts_categories" from "service_role";
-
-revoke insert on table "public"."posts_categories" from "service_role";
-
-revoke references on table "public"."posts_categories" from "service_role";
-
-revoke select on table "public"."posts_categories" from "service_role";
-
-revoke trigger on table "public"."posts_categories" from "service_role";
-
-revoke truncate on table "public"."posts_categories" from "service_role";
-
-revoke update on table "public"."posts_categories" from "service_role";
-
-revoke delete on table "public"."posts_tags" from "anon";
-
-revoke insert on table "public"."posts_tags" from "anon";
-
-revoke references on table "public"."posts_tags" from "anon";
-
-revoke select on table "public"."posts_tags" from "anon";
-
-revoke trigger on table "public"."posts_tags" from "anon";
-
-revoke truncate on table "public"."posts_tags" from "anon";
-
-revoke update on table "public"."posts_tags" from "anon";
-
-revoke delete on table "public"."posts_tags" from "authenticated";
-
-revoke insert on table "public"."posts_tags" from "authenticated";
-
-revoke references on table "public"."posts_tags" from "authenticated";
-
-revoke select on table "public"."posts_tags" from "authenticated";
-
-revoke trigger on table "public"."posts_tags" from "authenticated";
-
-revoke truncate on table "public"."posts_tags" from "authenticated";
-
-revoke update on table "public"."posts_tags" from "authenticated";
-
-revoke delete on table "public"."posts_tags" from "service_role";
-
-revoke insert on table "public"."posts_tags" from "service_role";
-
-revoke references on table "public"."posts_tags" from "service_role";
-
-revoke select on table "public"."posts_tags" from "service_role";
-
-revoke trigger on table "public"."posts_tags" from "service_role";
-
-revoke truncate on table "public"."posts_tags" from "service_role";
-
-revoke update on table "public"."posts_tags" from "service_role";
-
-alter table "public"."posts_categories" drop constraint "posts_categories_category_id_fkey";
-
-alter table "public"."posts_categories" drop constraint "posts_categories_post_id_fkey";
-
-alter table "public"."posts_raw" drop constraint "posts_raw_post_id_fkey";
-
-alter table "public"."posts_raw" drop constraint "posts_raw_post_id_key";
-
-alter table "public"."posts_secrets" drop constraint "posts_secrets_post_id_fkey";
-
-alter table "public"."posts_secrets" drop constraint "unique_post_id";
-
-alter table "public"."posts_tags" drop constraint "posts_tags_post_id_fkey";
-
-alter table "public"."posts_tags" drop constraint "posts_tags_tag_id_fkey";
-
-drop function if exists "public"."create_tags_name_cn"();
-
-drop function if exists "public"."generate_uid"();
-
-alter table "public"."posts" drop constraint "Post_pkey";
-
-alter table "public"."posts_categories" drop constraint "posts_categories_pkey";
-
-alter table "public"."posts_tags" drop constraint "posts_tags_pkey";
-
-drop index if exists "public"."Post_pkey";
-
-drop index if exists "public"."posts_categories_pkey";
-
-drop index if exists "public"."posts_raw_post_id_key";
-
-drop index if exists "public"."posts_tags_pkey";
-
-drop index if exists "public"."unique_post_id";
-
-drop table "public"."posts_categories";
-
-drop table "public"."posts_tags";
-
-alter table "public"."categories" add column "updated_at" timestamp with time zone not null default now();
-
-alter table "public"."images" drop column "hash";
-
-alter table "public"."images" add column "object_id" uuid;
-
-alter table "public"."images" add column "updated_at" timestamp with time zone not null default now();
-
-alter table "public"."images" alter column "id" drop default;
-
-alter table "public"."images" alter column "id" add generated by default as identity;
-
-alter table "public"."posts" drop column "visited";
-
-alter table "public"."posts_raw" drop column "post_id";
-
-alter table "public"."posts_secrets" drop column "post_id";
-
-alter table "public"."tags" alter column "id" drop default;
-
-alter table "public"."tags" alter column "id" add generated by default as identity;
-
-drop sequence if exists "public"."posts_id_seq";
-
-ALTER TABLE "public"."posts" ADD COLUMN uuid UUID;
-UPDATE "public"."posts" SET uuid = gen_random_uuid();
-ALTER TABLE "public"."posts" DROP COLUMN id;
-ALTER TABLE "public"."posts" RENAME COLUMN uuid TO id;
-ALTER TABLE "public"."posts" ALTER COLUMN id SET DEFAULT gen_random_uuid();
-ALTER TABLE "public"."posts" ADD PRIMARY KEY (id);
--- CREATE UNIQUE INDEX posts_pkey ON public.posts USING btree (id);
-
--- ALTER TABLE "public"."posts" ADD COLUMN drop column 'id';
-
--- ALTER TABLE "public"."posts" RENAME COLUMN uuid TO id;
-
--- alter table "public"."posts" alter column "id" set default gen_random_uuid();
-
--- alter table "public"."posts" alter column "id" drop identity;
-
--- alter table "public"."posts" alter column "id" set data type uuid using "id"::uuid;
-
--- CREATE UNIQUE INDEX posts_pkey ON public.posts USING btree (id);
-
--- alter table "public"."posts" add constraint "posts_pkey" PRIMARY KEY using index "posts_pkey";
-
-alter table "public"."images" add constraint "images_object_id_fkey" FOREIGN KEY (object_id) REFERENCES storage.objects(id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
-
-alter table "public"."images" validate constraint "images_object_id_fkey";
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+CREATE EXTENSION IF NOT EXISTS "pg_net" WITH SCHEMA "extensions";
+
+CREATE EXTENSION IF NOT EXISTS "pgsodium" WITH SCHEMA "pgsodium";
+
+CREATE EXTENSION IF NOT EXISTS "citext" WITH SCHEMA "extensions";
+
+CREATE EXTENSION IF NOT EXISTS "moddatetime" WITH SCHEMA "extensions";
+
+CREATE EXTENSION IF NOT EXISTS "pg_graphql" WITH SCHEMA "graphql";
+
+CREATE EXTENSION IF NOT EXISTS "pg_stat_statements" WITH SCHEMA "extensions";
+
+CREATE EXTENSION IF NOT EXISTS "pgcrypto" WITH SCHEMA "extensions";
+
+CREATE EXTENSION IF NOT EXISTS "pgjwt" WITH SCHEMA "extensions";
+
+CREATE EXTENSION IF NOT EXISTS "supabase_vault" WITH SCHEMA "vault";
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
+
+CREATE TYPE "public"."ads_position" AS ENUM (
+    'sides',
+    'banner',
+    'right-sticky'
+);
+
+ALTER TYPE "public"."ads_position" OWNER TO "postgres";
+
+CREATE TYPE "public"."type" AS ENUM (
+    'navi',
+    'promo',
+    'spider',
+    'undo',
+    'unknown'
+);
+
+ALTER TYPE "public"."type" OWNER TO "postgres";
+
+CREATE OR REPLACE FUNCTION "public"."update_tag_count"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$
+BEGIN
+  -- 处理插入操作
+  IF TG_OP = 'INSERT' THEN
+    UPDATE tags
+    SET count = count + 1
+    WHERE id = NEW.tag_id;
+  -- 处理删除操作
+  ELSIF TG_OP = 'DELETE' THEN
+    UPDATE tags
+    SET count = count - 1
+    WHERE id = OLD.tag_id;
+  -- 处理更新操作
+  ELSIF TG_OP = 'UPDATE' THEN
+    -- 当标签ID发生变化时，更新旧标签和新标签的计数字段
+    IF OLD.tag_id <> NEW.tag_id THEN
+      UPDATE tags
+      SET count = count - 1
+      WHERE id = OLD.tag_id;
+
+      UPDATE tags
+      SET count = count + 1
+      WHERE id = NEW.tag_id;
+    END IF;
+  END IF;
+
+  RETURN NULL;
+END;
+$$;
+
+ALTER FUNCTION "public"."update_tag_count"() OWNER TO "postgres";
+
+SET default_tablespace = '';
+
+SET default_table_access_method = "heap";
+
+CREATE TABLE IF NOT EXISTS "public"."categories" (
+    "id" bigint NOT NULL,
+    "name" character varying DEFAULT ''::character varying NOT NULL,
+    "description" character varying DEFAULT ''::character varying NOT NULL,
+    "slug" character varying NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL
+);
+
+ALTER TABLE "public"."categories" OWNER TO "postgres";
+
+ALTER TABLE "public"."categories" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."categories_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE TABLE IF NOT EXISTS "public"."configs" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "key" character varying DEFAULT ''::character varying NOT NULL,
+    "value" "jsonb"
+);
+
+ALTER TABLE "public"."configs" OWNER TO "postgres";
+
+ALTER TABLE "public"."configs" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."configs_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE TABLE IF NOT EXISTS "public"."images" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "source" character varying(250),
+    "url" character varying DEFAULT ''::character varying NOT NULL,
+    "description" character varying DEFAULT ''::character varying NOT NULL,
+    "object_id" "uuid",
+    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL
+);
+
+ALTER TABLE "public"."images" OWNER TO "postgres";
+
+ALTER TABLE "public"."images" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."images_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE TABLE IF NOT EXISTS "public"."posts" (
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "title" character varying(200) DEFAULT ''::character varying NOT NULL,
+    "excerpt" character varying DEFAULT ''::character varying NOT NULL,
+    "html" "text",
+    "is_active" boolean DEFAULT false NOT NULL,
+    "featured_image" character varying,
+    "slug" character varying DEFAULT ''::character varying NOT NULL,
+    "keywords" character varying,
+    "author_id" "uuid",
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL
+);
+
+ALTER TABLE "public"."posts" OWNER TO "postgres";
+
+CREATE TABLE IF NOT EXISTS "public"."posts_raw" (
+    "id" bigint NOT NULL,
+    "title" character varying DEFAULT ''::character varying NOT NULL,
+    "excerpt" character varying DEFAULT ''::character varying NOT NULL,
+    "keywords" character varying[],
+    "featured_image" character varying,
+    "html" "text",
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "source" character varying,
+    "secrets" "jsonb",
+    "markdown" "text",
+    "slug" character varying,
+    "author_id" "uuid",
+    "is_verified" boolean DEFAULT true NOT NULL
+);
+
+ALTER TABLE "public"."posts_raw" OWNER TO "postgres";
+
+ALTER TABLE "public"."posts_raw" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."posts_raw_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE TABLE IF NOT EXISTS "public"."posts_secrets" (
+    "id" bigint NOT NULL,
+    "version" character varying,
+    "data" "jsonb",
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL
+);
+
+ALTER TABLE "public"."posts_secrets" OWNER TO "postgres";
+
+ALTER TABLE "public"."posts_secrets" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."posts_secrets_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE TABLE IF NOT EXISTS "public"."tags" (
+    "id" bigint NOT NULL,
+    "created_at" timestamp(6) with time zone DEFAULT "now"() NOT NULL,
+    "updated_at" timestamp(6) with time zone DEFAULT "now"() NOT NULL,
+    "is_active" boolean DEFAULT true NOT NULL,
+    "order" integer DEFAULT 0 NOT NULL,
+    "name" character varying DEFAULT ''::character varying NOT NULL,
+    "slug" character varying NOT NULL,
+    "description" character varying DEFAULT ''::character varying NOT NULL,
+    "count" integer DEFAULT 0 NOT NULL
+);
+
+ALTER TABLE "public"."tags" OWNER TO "postgres";
+
+CREATE SEQUENCE IF NOT EXISTS "public"."tags_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE "public"."tags_id_seq" OWNER TO "postgres";
+
+ALTER SEQUENCE "public"."tags_id_seq" OWNED BY "public"."tags"."id";
+
+ALTER TABLE "public"."tags" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME "public"."tags_id_seq1"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE SEQUENCE IF NOT EXISTS "public"."tmr_image_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE "public"."tmr_image_id_seq" OWNER TO "postgres";
+
+ALTER SEQUENCE "public"."tmr_image_id_seq" OWNED BY "public"."images"."id";
+
+ALTER TABLE ONLY "public"."categories"
+    ADD CONSTRAINT "categories_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "public"."categories"
+    ADD CONSTRAINT "categories_slug_key" UNIQUE ("slug");
+
+ALTER TABLE ONLY "public"."configs"
+    ADD CONSTRAINT "configs_key_key" UNIQUE ("key");
+
+ALTER TABLE ONLY "public"."configs"
+    ADD CONSTRAINT "configs_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "public"."posts"
+    ADD CONSTRAINT "posts_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "public"."posts_raw"
+    ADD CONSTRAINT "posts_raw_from_key" UNIQUE ("source");
+
+ALTER TABLE ONLY "public"."posts_raw"
+    ADD CONSTRAINT "posts_raw_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "public"."posts_secrets"
+    ADD CONSTRAINT "posts_secrets_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "public"."images"
+    ADD CONSTRAINT "source_unique" UNIQUE ("source");
+
+ALTER TABLE ONLY "public"."tags"
+    ADD CONSTRAINT "tags_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "public"."tags"
+    ADD CONSTRAINT "tags_uri_928cdc64_uniq" UNIQUE ("slug");
+
+ALTER TABLE ONLY "public"."images"
+    ADD CONSTRAINT "tmr_image_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "public"."posts"
+    ADD CONSTRAINT "unique_posts_slug" UNIQUE ("slug");
+
+ALTER TABLE ONLY "public"."images"
+    ADD CONSTRAINT "url_unique" UNIQUE ("url");
+
+CREATE INDEX "idx_create_time" ON "public"."posts" USING "btree" ("created_at");
+
+CREATE INDEX "idx_slug" ON "public"."posts" USING "btree" ("slug");
+
+CREATE INDEX "tags_uri_928cdc64_like" ON "public"."tags" USING "btree" ("slug" "varchar_pattern_ops");
+
+ALTER TABLE ONLY "public"."images"
+    ADD CONSTRAINT "images_object_id_fkey" FOREIGN KEY ("object_id") REFERENCES "storage"."objects"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY "public"."posts"
+    ADD CONSTRAINT "posts_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "auth"."users"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY "public"."posts_raw"
+    ADD CONSTRAINT "posts_raw_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "auth"."users"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE POLICY "Enable insert for authenticated users only" ON "public"."posts_raw" FOR INSERT TO "authenticated" WITH CHECK ((("is_verified" IS FALSE) AND ("author_id" = "auth"."uid"())));
+
+CREATE POLICY "Enable read access for all users" ON "public"."categories" FOR SELECT USING (true);
+
+CREATE POLICY "Enable read access for all users" ON "public"."configs" FOR SELECT USING (true);
+
+CREATE POLICY "Enable read access for all users" ON "public"."images" FOR SELECT USING (true);
+
+CREATE POLICY "Enable read access for all users" ON "public"."posts" FOR SELECT USING (true);
+
+CREATE POLICY "Enable read access for all users" ON "public"."posts_secrets" FOR SELECT TO "authenticated" USING (true);
+
+CREATE POLICY "Enable read access for all users" ON "public"."tags" FOR SELECT USING (true);
+
+CREATE POLICY "Enable read access for self posts_raw" ON "public"."posts_raw" FOR SELECT TO "authenticated" USING (("auth"."uid"() = "author_id"));
+
+ALTER TABLE "public"."categories" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."configs" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."images" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."posts" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."posts_raw" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."posts_secrets" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."tags" ENABLE ROW LEVEL SECURITY;
+
+GRANT USAGE ON SCHEMA "public" TO "postgres";
+GRANT USAGE ON SCHEMA "public" TO "anon";
+GRANT USAGE ON SCHEMA "public" TO "authenticated";
+GRANT USAGE ON SCHEMA "public" TO "service_role";
+
+GRANT ALL ON FUNCTION "public"."update_tag_count"() TO "anon";
+GRANT ALL ON FUNCTION "public"."update_tag_count"() TO "authenticated";
+GRANT ALL ON FUNCTION "public"."update_tag_count"() TO "service_role";
+
+GRANT ALL ON TABLE "public"."categories" TO "anon";
+GRANT ALL ON TABLE "public"."categories" TO "authenticated";
+GRANT ALL ON TABLE "public"."categories" TO "service_role";
+
+GRANT ALL ON SEQUENCE "public"."categories_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."categories_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."categories_id_seq" TO "service_role";
+
+GRANT ALL ON TABLE "public"."configs" TO "anon";
+GRANT ALL ON TABLE "public"."configs" TO "authenticated";
+GRANT ALL ON TABLE "public"."configs" TO "service_role";
+
+GRANT ALL ON SEQUENCE "public"."configs_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."configs_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."configs_id_seq" TO "service_role";
+
+GRANT ALL ON TABLE "public"."images" TO "anon";
+GRANT ALL ON TABLE "public"."images" TO "authenticated";
+GRANT ALL ON TABLE "public"."images" TO "service_role";
+
+GRANT ALL ON SEQUENCE "public"."images_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."images_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."images_id_seq" TO "service_role";
+
+GRANT ALL ON TABLE "public"."posts" TO "anon";
+GRANT ALL ON TABLE "public"."posts" TO "authenticated";
+GRANT ALL ON TABLE "public"."posts" TO "service_role";
+
+GRANT ALL ON TABLE "public"."posts_raw" TO "anon";
+GRANT ALL ON TABLE "public"."posts_raw" TO "authenticated";
+GRANT ALL ON TABLE "public"."posts_raw" TO "service_role";
+
+GRANT ALL ON SEQUENCE "public"."posts_raw_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."posts_raw_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."posts_raw_id_seq" TO "service_role";
+
+GRANT ALL ON TABLE "public"."posts_secrets" TO "anon";
+GRANT ALL ON TABLE "public"."posts_secrets" TO "authenticated";
+GRANT ALL ON TABLE "public"."posts_secrets" TO "service_role";
+
+GRANT ALL ON SEQUENCE "public"."posts_secrets_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."posts_secrets_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."posts_secrets_id_seq" TO "service_role";
+
+GRANT ALL ON TABLE "public"."tags" TO "anon";
+GRANT ALL ON TABLE "public"."tags" TO "authenticated";
+GRANT ALL ON TABLE "public"."tags" TO "service_role";
+
+GRANT ALL ON SEQUENCE "public"."tags_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."tags_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."tags_id_seq" TO "service_role";
+
+GRANT ALL ON SEQUENCE "public"."tags_id_seq1" TO "anon";
+GRANT ALL ON SEQUENCE "public"."tags_id_seq1" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."tags_id_seq1" TO "service_role";
+
+GRANT ALL ON SEQUENCE "public"."tmr_image_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."tmr_image_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."tmr_image_id_seq" TO "service_role";
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "service_role";
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "service_role";
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "service_role";
+
+RESET ALL;
