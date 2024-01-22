@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-24 11:39:28
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 17:31:36
+ * @LastEditTime: 2024-01-22 15:41:15
  * @FilePath: /ticket/app/posts/[slug]/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		title: post.title,
 		description: post.excerpt,
 		openGraph: {
-			images: post.featured_image ?? 'https://img.v2dao.com/p.jpeg'
+			// images: post.featured_image ?? 'https://img.v2dao.com/p.jpeg'
 		}
 	};
 }
@@ -46,15 +46,9 @@ export default async function PostDetailPage({ params }: Props) {
 	if (!post) {
 		return notFound();
 	}
-	const appData = await handler.getAppConfig();
-	const {
-		data: { user }
-	} = await handler.client.auth.getUser();
 	const { posts } = await handler.getPosts({
 		page: 1,
-		pageSize: 10,
-		// categories: appData.categories,
+		pageSize: 10
 	});
-	const secrets = <R18Secrets authenticated={user !== null} secrets={post.secrets} />;
-	return <Detail post={post} relatedPosts={posts} secrets={secrets} />;
+	return <Detail post={post} relatedPosts={posts} />;
 }

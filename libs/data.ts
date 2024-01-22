@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-22 14:38:40
+ * @LastEditTime: 2024-01-22 15:49:17
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -144,31 +144,23 @@ export class Handler {
 		return site;
 	};
 
-	async getPosts(props?: {
-		page?: number;
-		pageSize?: number;
-		category?: string;
-    tag?: string
-	}) {
+	async getPosts(props?: { page?: number; pageSize?: number; category?: string; tag?: string }) {
 		const defaultValue = {
 			page: 1,
-			pageSize: 10,
+			pageSize: 10
 		};
 		const { page, pageSize, tag, category } = {
 			...defaultValue,
 			...props
 		};
-		let select = 'title, excerpt, slug, featured_image, created_at';
-		// if (tag) {
-		// 	select = `${select},tags!inner(name,slug)`;
-		// }
-    let query = this.client.from('v_posts').select(select, {
+		let select = 'title, excerpt, slug, featured_image, created_at, tags(name,slug)';
+		let query = this.client.from('v_posts').select(select, {
 			count: 'exact'
 		});
-    if (tag) {
-      query = query.contains('tags', tag)
-    }
-    if (category) {
+		if (tag) {
+			query = query.contains('tags', tag);
+		}
+		if (category) {
 			query = query.contains('categories', category);
 		}
 		const {
@@ -187,19 +179,7 @@ export class Handler {
 		};
 	}
 
-	getPost = async (props: { slug?: string; isChinese?: boolean; title?: string }) => {
-		const defaultValue = {
-			isChinese: true
-		};
-		const { slug, title, isChinese } = {
-			...defaultValue,
-			...props
-		};
-		const tagKey = !isChinese ? 'name' : 'name:name_cn';
-		const bonusKey = !isChinese ? 'bonus' : 'bonus:bonus_cn';
-		const langKeys = isChinese
-			? 'name:name_cn,bonus:bonus_cn,description:description_cn,short_description:short_description_cn'
-			: 'name,bonus,description,short_description';
+	getPost = async ({ slug }: { slug: string }) => {
 		let query = this.client
 			.from('v_posts')
 			.select(
@@ -207,26 +187,16 @@ export class Handler {
         title,
         excerpt,
         slug,
-        ghost_id,
         featured_image,
         created_at,
         html,
         categories,
-        tags(${tagKey}, slug),
-        sites:v_sites!posts_sites(short_name,avatar,rating,uid,${bonusKey},code,${langKeys},categories),
-        secrets:posts_secrets(version, data)`
+        tags(name, slug)`
 			)
-			.eq('sites.type', 'promo')
 			.eq('is_active', true)
-			.order('order', { foreignTable: 'v_sites', ascending: false });
-		if (slug) {
-			query = query.or(`slug.eq.${slug},ghost_id.eq.${slug}`);
-		}
-		if (title) {
-			query = query.eq('title', title);
-		}
+			.eq('slug', slug);
 		const { data: post, error } = await query.single<PostDetail>();
-		// console.log(error)
+		console.log(error);
 		return post;
 	};
 
@@ -245,26 +215,18 @@ export class Handler {
 	};
 
 	getCategory = async (props: { slug: string }) => {
-		const { data: category, error } = await this.client.from('categories').select('name, slug').eq('slug', props.slug).single();
+		const { data: category } = await this.client.from('categories').select('name, slug').eq('slug', props.slug).single();
 		return category;
 	};
 
-	getTag = async (props: { slug: string; isChinese?: boolean }) => {
-		const defaultValue = {
-			isChinese: true
-		};
-		const { slug, isChinese } = {
-			...defaultValue,
-			...props
-		};
-		const langKeys = !isChinese ? 'name' : 'name:name_cn';
-		const { data: tag, error } = await this.client.from('tags').select(`${langKeys}, slug`).eq('slug', slug).single();
+	getTag = async (props: { slug: string }) => {
+		const { data: tag } = await this.client.from('tags').select(`name, slug`).eq('slug', props.slug).single();
 		return tag;
 	};
 
-	getTags = async (props: { count: number, filter: number }) => {
+	getTags = async (props: { count: number; filter: number }) => {
 		const defaultValue = {
-      filter: 5,
+			filter: 5,
 			count: 50
 		};
 		const { count, filter } = {
@@ -274,7 +236,7 @@ export class Handler {
 		let query = this.client
 			.from('tags')
 			.select(`name, slug`)
-      .eq('is_active', true)
+			.eq('is_active', true)
 			.gt('count', filter)
 			.order('count', { ascending: false })
 			.limit(count);
