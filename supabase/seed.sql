@@ -3,3 +3,5 @@ INSERT INTO "configs" ("id", "key", "value") VALUES (2, 'footer', '[{"url": "/",
 INSERT INTO "configs" ("id", "key", "value") VALUES (3, 'header', '[{"url": "/", "name": "首页"}, {"url": "/posts", "name": "文章"}, {"url": "/contact", "name": "联系"}, {"url": "/privacy", "name": "隐私"}]');
 
 INSERT INTO "public"."posts" ("title", "excerpt", "html", "is_active", "featured_image", "slug", "keywords", "author_id") VALUES ('My First Post', 'Hello World!', 'Hello World!', 't', NULL, 'hello-world', '', NULL);
+
+INSERT INTO "storage"."buckets" ("id", "name", "owner", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id") VALUES ('images', 'images', NULL, 't', 'f', 10485760, '{image/*}', NULL);
