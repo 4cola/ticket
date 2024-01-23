@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-23 10:31:31
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-23 15:22:33
+ * @LastEditTime: 2024-01-23 15:29:00
  * @FilePath: /ticket/README.md
  * @Description: black4jin@gmail.com
  * 
@@ -10,14 +10,14 @@
 -->
 # ticket(under development)
 
-## self host blog based on
-- <a href="https://nextjs.org/docs" target="_blank"><strong>nextjs</strong></a>
-- <a href="https://supabase.com/" target="_blank"><strong>supabase</strong></a>
-- <a href="https://tailwindcss.com/" target="_blank"><strong>supabase</strong></a>
+## self host blog(CMS) based on
+- <a href="https://nextjs.org/docs" target="_blank">nextjs</a>
+- <a href="https://supabase.com/" target="_blank">supabase</a>
+- <a href="https://tailwindcss.com/" target="_blank">tailwindcss</a>
 
 ## DEMO
 <p>
- <a href="https://www.jinblack.com" target="_blank"><strong>jinblack.com</strong></a>
+ <a href="https://www.jinblack.com" target="_blank">jinblack.com</a>
 </p>
 
 ## How to begin
@@ -30,7 +30,7 @@
 5. Using supabase cli to init database
    1. git clone https://github.com/4cola/ticket
    2. cd supabase
-   3. <a href="https://supabase.com/docs/guides/cli/getting-started" target="_blank"><strong>install supabase cli</strong></a>
+   3. <a href="https://supabase.com/docs/guides/cli/getting-started" target="_blank">install supabase cli</a>
    4. login supabase ```supabase login```
    5. link to project ```supabase link --project-ref [ProjectID]```
    6. push migrations ```supabase db push --password=[DatabasePassword]```
