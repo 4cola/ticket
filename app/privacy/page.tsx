@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-11 16:31:45
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 17:33:27
+ * @LastEditTime: 2024-01-23 10:13:24
  * @FilePath: /ticket/app/privacy/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -23,6 +23,7 @@ export default async function Privacy() {
 	const email = config.metas.email;
 	return (
 		<Article>
+      <h2>Privacy</h2>
 			<ol>
 				<li>
 					<h3>Introduction</h3>
