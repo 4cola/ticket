@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-23 09:58:23
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-23 10:04:41
+ * @LastEditTime: 2024-01-23 14:26:10
  * @FilePath: /ticket/app/page.tsx
  * @Description: black4jin@gmail.com
  *
@@ -13,6 +13,8 @@ import React from 'react';
 import More from '@/components/index/More';
 import Title from '@/components/index/Title';
 import ArticleList from '@/components/posts/ArticleList';
+
+export const revalidate = 3;
 
 export default async function Index() {
   const handler = createSupaHandler()
