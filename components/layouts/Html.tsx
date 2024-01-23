@@ -36,7 +36,7 @@ const Content = ({ banner, logo, children, appConfig, moreContents, hasLogin }: 
 					<div className="grid grid-rows-1 grid-cols-4 grid-flow-row gap-4">
 						<Leftbar />
 						<div className="col-span-4 lg:col-span-3 flex flex-col gap-4">
-							<div className="hidden md:block">{banner}</div>
+							{/* <div className="hidden md:block">{banner}</div> */}
 							<main className="p-4 md:p-8 lg:py-12 bg-white">{children}</main>
 						</div>
 						{/* {rightbar} */}
