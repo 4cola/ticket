@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 13:55:17
+ * @LastEditTime: 2024-01-24 14:10:28
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -155,7 +155,7 @@ export class Handler {
 
 }
 
-export function createBrowserClient(props?: { url?: string; key?: string }) {
+export function createBrowserHandler(props?: { url?: string; key?: string }) {
 	const supabase = createClient<Database>(
 		props?.url || process.env.NEXT_PUBLIC_SUPABASE_URL!,
 		props?.key || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!

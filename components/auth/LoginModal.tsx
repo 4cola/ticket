@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-08 13:51:22
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 15:48:22
+ * @LastEditTime: 2024-01-24 14:13:57
  * @FilePath: /ticket/components/auth/LoginModal.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -13,7 +13,8 @@ import Modal from '@/components/public/Modal';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { Auth } from '@supabase/auth-ui-react';
 import { create } from 'zustand';
-import { useBrowserSupabase, useAppContext } from '../../libs/store';
+import { useAppContext } from '@/libs/store';
+import { createBrowserHandler } from '@/libs/data';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -42,7 +43,7 @@ const useLoginForm = create<LoginModalState>()((set) => ({
 
 const LoginModal = () => {
 	const { isOpen, close } = useLoginForm();
-	const supabase = useBrowserSupabase();
+	const { client: supabase } = createBrowserHandler();
 	const router = useRouter();
 	const updateUser = useAppContext((s) => s.updateUser);
 	useEffect(() => {
@@ -77,7 +78,8 @@ const LoginModal = () => {
 				appearance={{ theme: ThemeSupa }}
 				theme="dark"
 				socialLayout="horizontal"
-				providers={['google', 'twitter']}
+				// providers={['google', 'twitter']}
+        providers={[]}
 				localization={{
 					variables: {
 						sign_in: {

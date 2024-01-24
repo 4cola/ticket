@@ -9,7 +9,9 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import clsx from 'clsx';
 import { Fragment } from 'react';
 import defaultAvatar from '@/assets/images/avatar.jpeg';
-import { useBrowserSupabase, useAppContext } from '../../libs/store';
+import { useAppContext } from '@/libs/store';
+import { createBrowserHandler } from '@/libs/data';
+
 import { useLoginForm } from '../auth/LoginModal';
 
 const checkPath = ({ currentPath, url }: { currentPath: string | null; url: string }) => {
@@ -94,7 +96,7 @@ const Avatar = ({ avatar }: { avatar?: string }) => {
 
 const NaviDrawer = ({ routes, hasLogin }: { routes: Route[]; hasLogin: boolean }) => {
 	const { open } = useLoginForm();
-	const supabase = useBrowserSupabase();
+	const { client: supabase } = createBrowserHandler();
 	const user = useAppContext((s) => s.user);
 	let loginPart;
 	if (hasLogin) {
@@ -176,7 +178,7 @@ const NaviDrawer = ({ routes, hasLogin }: { routes: Route[]; hasLogin: boolean }
 
 const UserInteract = () => {
 	const { open } = useLoginForm();
-	const supabase = useBrowserSupabase();
+	const { client: supabase } = createBrowserHandler();
 	const user = useAppContext((s) => s.user);
 	return user ? (
 		<Menu as="div" className="relative ml-3">
