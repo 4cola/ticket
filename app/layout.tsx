@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-18 15:26:50
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 17:29:26
+ * @LastEditTime: 2024-01-24 11:42:32
  * @FilePath: /ticket/app/layout.tsx
  * @Description: black4jin@gmail.com
  *
@@ -15,7 +15,7 @@ import Html from '@/components/layouts/Html';
 
 export const dynamic = 'auto';
 export const dynamicParams = true;
-export const revalidate = 5;
+export const revalidate = 60;
 export const runtime = 'nodejs';
 export const preferredRegion = 'global';
 

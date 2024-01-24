@@ -2,8 +2,8 @@
  * @Author: JinBlack
  * @Date: 2023-12-21 17:33:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2023-12-25 13:53:28
- * @FilePath: /4tmr/packages/next-shared/components/widgets/HotTags.tsx
+ * @LastEditTime: 2024-01-24 11:35:23
+ * @FilePath: /ticket/components/widgets/HotTags.tsx
  * @Description: dota2sites@gmail.com
  *
  * Copyright (c) 2023 by 4tmr, All Rights Reserved.
@@ -35,7 +35,7 @@ const HotTags = ({
         <h2 className="flex flex-row flex-nowrap items-center justify-center">
           {/* <span className="flex-grow block border-t border-black"></span> */}
           <span className="flex-none block mx-4 px-4 py-2.5 text-md rounded leading-none font-medium bg-black text-white">
-            热门标签
+            标签
           </span>
           {/* <span className="flex-grow block border-t border-black"></span> */}
         </h2>

@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-28 10:44:33
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 15:46:00
+ * @LastEditTime: 2024-01-24 11:35:04
  * @FilePath: /ticket/components/layouts/Html.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -11,6 +11,7 @@
 import Header from './Header';
 import Footer from './Footer';
 import Leftbar from './Leftbar';
+import Rightbar from './Rightbar'
 import { Notifications } from '../public/Notification';
 import NextTopLoader from 'nextjs-toploader';
 import { LoginModal } from '@/components/auth/LoginModal';
@@ -39,7 +40,7 @@ const Content = ({ banner, logo, children, appConfig, moreContents, hasLogin }: 
 							{/* <div className="hidden md:block">{banner}</div> */}
 							<main className="p-4 md:p-8 lg:py-12 bg-white">{children}</main>
 						</div>
-						{/* {rightbar} */}
+            <Rightbar />
 					</div>
 				</div>
 				<Footer routers={appConfig.footer} domain={appConfig.metas.domain} />
