@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-03 14:48:47
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 14:00:16
+ * @LastEditTime: 2024-01-24 14:09:09
  * @FilePath: /ticket/libs/store.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -12,12 +12,6 @@
 import { useRef, useContext, createContext } from 'react'
 import { create, createStore, useStore } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { type SPClient, type Database } from './data';
-import { createBrowserClient } from '@supabase/ssr';
-
-export const useBrowserSupabase = create<SPClient>()((set) =>
-	createBrowserClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
-);
 
 type AppProps = {
   user?: User

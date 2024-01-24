@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-24 11:39:28
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-22 16:59:04
+ * @LastEditTime: 2024-01-24 14:06:50
  * @FilePath: /ticket/app/posts/[slug]/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -19,7 +19,7 @@ type Props = {
 	};
 };
 
-export const revalidate = 3600 * 24 * 180;
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const post = await createSupaHandler().getPost({

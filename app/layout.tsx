@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-18 15:26:50
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 13:53:22
+ * @LastEditTime: 2024-01-24 14:06:03
  * @FilePath: /ticket/app/layout.tsx
  * @Description: black4jin@gmail.com
  *
@@ -80,8 +80,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 			categories={categories}
 			tags={tags}
 			logo={null}
-			banner={null}
-			moreContents={null}
 			hasLogin={true}
 		/>
 	);
