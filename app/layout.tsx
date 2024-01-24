@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-18 15:26:50
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 11:42:32
+ * @LastEditTime: 2024-01-24 13:53:22
  * @FilePath: /ticket/app/layout.tsx
  * @Description: black4jin@gmail.com
  *
@@ -62,5 +62,27 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 	const handler = createSupaHandler();
 	const config = await handler.getAppConfig();
 	const { user } = await handler.getUser();
-	return <Html {...props} appConfig={config} user={user} logo={null} banner={null} moreContents={null} hasLogin={true} />;
+	const { data: categories } = await handler.client
+		.from('v_categories')
+		.select('name,slug')
+		.order('count', { ascending: false })
+		.returns<Category[] | null>();
+	const { data: tags } = await handler.client
+		.from('v_tags')
+		.select('name,slug')
+		.order('count', { ascending: false })
+		.returns<Tag[] | null>();
+	return (
+		<Html
+			{...props}
+			appConfig={config}
+			user={user}
+			categories={categories}
+			tags={tags}
+			logo={null}
+			banner={null}
+			moreContents={null}
+			hasLogin={true}
+		/>
+	);
 }
