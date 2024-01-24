@@ -29,7 +29,9 @@
     "zustand": "^4.4.7",
     "@supabase/auth-ui-react": "^0.3.6",
     "@supabase/auth-ui-shared": "0.1.4",
-    "html-react-parser": "^5.0.6"
+    "html-react-parser": "^5.0.6",
+    "showdown": "^2.1.0",
+    "@mdxeditor/editor": "^1.14.3"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -37,6 +39,7 @@
     "@types/react-dom": "^18",
     "encoding": "^0.1.13",
     "@tailwindcss/typography": "^0.5.9",
-    "@tailwindcss/forms": "^0.5.7"
+    "@tailwindcss/forms": "^0.5.7",
+    "@types/showdown": "^2.0.6"
   }
 }

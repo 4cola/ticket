@@ -2,18 +2,16 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 14:10:28
+ * @LastEditTime: 2024-01-24 15:00:25
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
  * Copyright (c) 2023 by 4tmr, All Rights Reserved.
  */
-import { SupabaseClient, createClient } from '@supabase/supabase-js';
+import { SupabaseClient } from '@supabase/supabase-js';
 import type { Database, Json } from '../types/supabase';
 
 export type SPClient = SupabaseClient<Database>;
-export type { Database, Json };
-export { createClient };
 
 export class Handler {
 	client: SPClient;
@@ -153,12 +151,4 @@ export class Handler {
 		return ads;
 	};
 
-}
-
-export function createBrowserHandler(props?: { url?: string; key?: string }) {
-	const supabase = createClient<Database>(
-		props?.url || process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		props?.key || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-	);
-	return new Handler(supabase);
 }
