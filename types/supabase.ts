@@ -105,7 +105,7 @@ export interface Database {
           excerpt: string
           featured_image: string | null
           html: string | null
-          id: string
+          id: number
           is_active: boolean
           keywords: string | null
           slug: string
@@ -118,7 +118,7 @@ export interface Database {
           excerpt?: string
           featured_image?: string | null
           html?: string | null
-          id?: string
+          id?: number
           is_active?: boolean
           keywords?: string | null
           slug?: string
@@ -131,7 +131,7 @@ export interface Database {
           excerpt?: string
           featured_image?: string | null
           html?: string | null
-          id?: string
+          id?: number
           is_active?: boolean
           keywords?: string | null
           slug?: string
@@ -152,17 +152,17 @@ export interface Database {
         Row: {
           category_id: number
           created_at: string
-          post_id: string
+          post_id: number
         }
         Insert: {
           category_id: number
           created_at?: string
-          post_id: string
+          post_id: number
         }
         Update: {
           category_id?: number
           created_at?: string
-          post_id?: string
+          post_id?: number
         }
         Relationships: [
           {
@@ -170,6 +170,13 @@ export interface Database {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "v_categories"
             referencedColumns: ["id"]
           },
           {
@@ -199,6 +206,7 @@ export interface Database {
           is_verified: boolean
           keywords: string[] | null
           markdown: string | null
+          post_id: number | null
           secrets: Json | null
           slug: string | null
           source: string | null
@@ -214,6 +222,7 @@ export interface Database {
           is_verified?: boolean
           keywords?: string[] | null
           markdown?: string | null
+          post_id?: number | null
           secrets?: Json | null
           slug?: string | null
           source?: string | null
@@ -229,6 +238,7 @@ export interface Database {
           is_verified?: boolean
           keywords?: string[] | null
           markdown?: string | null
+          post_id?: number | null
           secrets?: Json | null
           slug?: string | null
           source?: string | null
@@ -241,44 +251,37 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_raw_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_raw_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "v_posts"
+            referencedColumns: ["id"]
           }
         ]
-      }
-      posts_secrets: {
-        Row: {
-          created_at: string
-          data: Json | null
-          id: number
-          version: string | null
-        }
-        Insert: {
-          created_at?: string
-          data?: Json | null
-          id?: number
-          version?: string | null
-        }
-        Update: {
-          created_at?: string
-          data?: Json | null
-          id?: number
-          version?: string | null
-        }
-        Relationships: []
       }
       posts_tags: {
         Row: {
           created_at: string
-          post_id: string
+          post_id: number
           tag_id: number
         }
         Insert: {
           created_at?: string
-          post_id: string
+          post_id: number
           tag_id: number
         }
         Update: {
           created_at?: string
-          post_id?: string
+          post_id?: number
           tag_id?: number
         }
         Relationships: [
@@ -302,47 +305,53 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "tags"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "v_tags"
+            referencedColumns: ["id"]
           }
         ]
       }
       tags: {
         Row: {
-          count: number
           created_at: string
           description: string
           id: number
-          is_active: boolean
           name: string
-          order: number
           slug: string
-          updated_at: string
         }
         Insert: {
-          count?: number
           created_at?: string
           description?: string
           id?: number
-          is_active?: boolean
           name?: string
-          order?: number
           slug: string
-          updated_at?: string
         }
         Update: {
-          count?: number
           created_at?: string
           description?: string
           id?: number
-          is_active?: boolean
           name?: string
-          order?: number
           slug?: string
-          updated_at?: string
         }
         Relationships: []
       }
     }
     Views: {
+      v_categories: {
+        Row: {
+          count: number | null
+          created_at: string | null
+          description: string | null
+          id: number | null
+          name: string | null
+          slug: string | null
+        }
+        Relationships: []
+      }
       v_posts: {
         Row: {
           categories: string[] | null
@@ -350,7 +359,7 @@ export interface Database {
           excerpt: string | null
           featured_image: string | null
           html: string | null
-          id: string | null
+          id: number | null
           is_active: boolean | null
           slug: string | null
           tags: string[] | null
@@ -359,13 +368,23 @@ export interface Database {
         }
         Relationships: []
       }
+      v_tags: {
+        Row: {
+          count: number | null
+          created_at: string | null
+          description: string | null
+          id: number | null
+          name: string | null
+          slug: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
     }
     Enums: {
-      ads_position: "sides" | "banner" | "right-sticky"
-      type: "navi" | "promo" | "spider" | "undo" | "unknown"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
