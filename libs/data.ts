@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 15:00:25
+ * @LastEditTime: 2024-01-24 15:21:38
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -150,5 +150,4 @@ export class Handler {
 		ads?.sort((a, b) => b.sites.order - a.sites.order);
 		return ads;
 	};
-
 }
