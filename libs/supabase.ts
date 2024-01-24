@@ -2,14 +2,15 @@
  * @Author: JinBlack
  * @Date: 2023-12-18 17:33:30
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 17:29:06
+ * @LastEditTime: 2024-01-24 15:03:40
  * @FilePath: /ticket/libs/supabase.ts
  * @Description: dota2sites@gmail.com
  *
  * Copyright (c) 2023 by 4tmr, All Rights Reserved.
  */
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
-import { type SPClient, type Database, Handler } from './data';
+import { type SPClient, Handler } from './data';
+import { type Database } from '@/types/supabase';
 // 下面是@supabase/ssr的文档
 // https://supabase.com/docs/guides/auth/server-side/creating-a-client?environment=client-component
 import { cookies } from 'next/headers';

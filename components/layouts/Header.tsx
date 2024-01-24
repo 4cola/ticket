@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import { Fragment } from 'react';
 import defaultAvatar from '@/assets/images/avatar.jpeg';
 import { useAppContext } from '@/libs/store';
-import { createBrowserHandler } from '@/libs/data';
+import { createBrowserHandler } from '@/libs/supabase-browser';
 
 import { useLoginForm } from '../auth/LoginModal';
 

@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-08 13:51:22
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 14:13:57
+ * @LastEditTime: 2024-01-24 15:04:42
  * @FilePath: /ticket/components/auth/LoginModal.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -14,7 +14,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { Auth } from '@supabase/auth-ui-react';
 import { create } from 'zustand';
 import { useAppContext } from '@/libs/store';
-import { createBrowserHandler } from '@/libs/data';
+import { createBrowserHandler } from '@/libs/supabase-browser';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
