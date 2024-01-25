@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-24 11:39:28
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 14:06:50
+ * @LastEditTime: 2024-01-25 11:17:40
  * @FilePath: /ticket/app/posts/[slug]/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -22,24 +22,24 @@ type Props = {
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const post = await createSupaHandler().getPost({
+	const post = await createSupaHandler().getPostDetail({
 		slug: params.slug
 	});
-	if (!post) {
-		return notFound();
+	if (post) {
+		return {
+			title: post.title,
+			description: post.excerpt,
+			openGraph: {
+				// images: post.featured_image ?? ''
+			}
+		};
 	}
-	return {
-		title: post.title,
-		description: post.excerpt,
-		openGraph: {
-			// images: post.featured_image ?? ''
-		}
-	};
+	return {};
 }
 
 export default async function PostDetailPage({ params }: Props) {
 	const handler = createSupaHandler();
-	const post = await handler.getPost({
+	const post = await handler.getPostDetail({
 		slug: params.slug
 	});
 	if (!post) {
