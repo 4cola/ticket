@@ -16,7 +16,6 @@ export interface Database {
           id: number
           name: string
           slug: string
-          updated_at: string
         }
         Insert: {
           created_at?: string
@@ -24,7 +23,6 @@ export interface Database {
           id?: number
           name?: string
           slug: string
-          updated_at?: string
         }
         Update: {
           created_at?: string
@@ -32,7 +30,6 @@ export interface Database {
           id?: number
           name?: string
           slug?: string
-          updated_at?: string
         }
         Relationships: []
       }
@@ -106,9 +103,9 @@ export interface Database {
           featured_image: string | null
           html: string | null
           id: number
-          is_active: boolean
           keywords: string | null
           slug: string
+          status: Database["public"]["Enums"]["post_status"]
           title: string
           updated_at: string
         }
@@ -119,9 +116,9 @@ export interface Database {
           featured_image?: string | null
           html?: string | null
           id?: number
-          is_active?: boolean
           keywords?: string | null
           slug?: string
+          status?: Database["public"]["Enums"]["post_status"]
           title?: string
           updated_at?: string
         }
@@ -132,9 +129,9 @@ export interface Database {
           featured_image?: string | null
           html?: string | null
           id?: number
-          is_active?: boolean
           keywords?: string | null
           slug?: string
+          status?: Database["public"]["Enums"]["post_status"]
           title?: string
           updated_at?: string
         }
@@ -360,8 +357,8 @@ export interface Database {
           featured_image: string | null
           html: string | null
           id: number | null
-          is_active: boolean | null
           slug: string | null
+          status: Database["public"]["Enums"]["post_status"] | null
           tags: string[] | null
           title: string | null
           updated_at: string | null
@@ -384,7 +381,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      post_status: "published" | "under_review" | "draft" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never

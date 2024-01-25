@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-23 10:31:31
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-23 15:29:00
+ * @LastEditTime: 2024-01-24 15:28:50
  * @FilePath: /ticket/README.md
  * @Description: black4jin@gmail.com
  * 
@@ -17,7 +17,7 @@
 
 ## DEMO
 <p>
- <a href="https://www.jinblack.com" target="_blank">jinblack.com</a>
+ <a href="https://www.jinblack.com" target="_blank">www.jinblack.com</a>
 </p>
 
 ## How to begin

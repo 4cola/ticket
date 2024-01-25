@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-12 15:42:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 15:21:38
+ * @LastEditTime: 2024-01-25 11:16:36
  * @FilePath: /ticket/libs/data.ts
  * @Description: dota2sites@gmail.com
  *
@@ -83,7 +83,7 @@ export class Handler {
 			count,
 			error
 		} = await query
-			.eq('is_active', true)
+			.eq('status', 'published')
 			.range(pageSize * (page - 1), pageSize * page - 1)
 			.order('created_at', { ascending: false })
 			.returns<PostLite[] | null>();
@@ -94,7 +94,7 @@ export class Handler {
 		};
 	}
 
-	getPost = async ({ slug }: { slug: string }) => {
+	getPostDetail = async ({ slug }: { slug: string }) => {
 		let query = this.client
 			.from('v_posts')
 			.select(
@@ -108,7 +108,7 @@ export class Handler {
         categories,
         tags(name, slug)`
 			)
-			.eq('is_active', true)
+			.eq('status', 'published')
 			.eq('slug', slug);
 		const { data: post, error } = await query.single<PostDetail>();
 		// console.log(error);
