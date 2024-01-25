@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-23 14:49:55
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-22 15:49:03
+ * @LastEditTime: 2024-01-24 15:22:14
  * @FilePath: /ticket/types/global.d.ts
  * @Description: dota2sites@gmail.com
  *
@@ -19,6 +19,7 @@ type AppConfig = {
   }
   header: Route[]
   footer: Route[]
+  friendlinks: Route[]
 }
 
 type AppData = {
@@ -120,7 +121,3 @@ type PostDetail = {
   categories: string[]
 } & PostLite;
 
-type FriendLink = {
-  url_source: string;
-  name: string;
-};

@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-11 16:31:45
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-18 16:47:18
+ * @LastEditTime: 2024-01-24 15:22:45
  * @FilePath: /ticket/app/contact/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -21,17 +21,17 @@ export const revalidate = 60;
 
 type Props = {
 	email: string;
-	friendLinks?: FriendLink[] | null;
+	friendLinks?: Route[] | null;
 };
 
 const Contact = (props: Props) => {
 	const friendLinksList = (
 		<ul>
-			{props.friendLinks?.map((site, i) => {
+			{props.friendLinks?.map((route, i) => {
 				return (
 					<li key={i}>
-						<Link prefetch={false} title={site.name} href={site.url_source} target="_blank">
-							{site.url_source.replace('https://', '').replace('http://', '')}
+						<Link prefetch={false} title={route.name} href={route.url} target="_blank">
+							{route.name}
 						</Link>
 					</li>
 				);
@@ -56,5 +56,5 @@ const Contact = (props: Props) => {
 export default async function ContactPage() {
 	const handler = createSupaHandler();
 	const config = await handler.getAppConfig();
-	return <Contact email={config.metas.email} friendLinks={[]} />;
+	return <Contact email={config.metas.email} friendLinks={config.friendlinks} />;
 }
