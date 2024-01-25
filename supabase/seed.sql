@@ -3,7 +3,7 @@ INSERT INTO "configs" ("key", "value") VALUES ('footer', '[{"url": "/", "name": 
 INSERT INTO "configs" ("key", "value") VALUES ('header', '[{"url": "/", "name": "首页"}, {"url": "/posts", "name": "文章"}, {"url": "/contact", "name": "联系"}, {"url": "/privacy", "name": "隐私"}]');
 INSERT INTO "public"."configs" ("key", "value") VALUES ('friendlinks', '[{"url": "https://github.com/4cola/ticket", "name": "ticket"},{"url": "https://www.jinblack.com", "name": "jinblack"},{"url": "https://www.4tmr.com", "name": "4tmr"}]');
 
-INSERT INTO "public"."posts" ("title", "excerpt", "html", "is_active", "featured_image", "slug", "keywords", "author_id") VALUES ('My First Post', 'Hello World!', 'Hello World!', 't', NULL, 'hello-world', '', NULL);
+INSERT INTO "public"."posts" ("title", "excerpt", "html", "featured_image", "slug", "keywords", "author_id", "status") VALUES ('My First Post', 'Hello World!', 'Hello World!', NULL, 'hello-world', '', NULL, 'published');
 
 INSERT INTO "storage"."buckets" ("id", "name", "owner", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id") VALUES ('images', 'images', NULL, 't', 'f', 10485760, '{image/*}', NULL);
 
