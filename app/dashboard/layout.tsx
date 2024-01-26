@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-24 14:21:05
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 14:21:05
+ * @LastEditTime: 2024-01-26 15:22:05
  * @FilePath: /ticket/app/dashboard/layout.tsx
  * @Description: black4jin@gmail.com
  *
@@ -17,11 +17,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Layout(props: { children: React.ReactNode }) {
-  const handler = createSupaHandler()
-  const { user } = await handler.getUser()
-  if (user) {
-    return <>{props.children}</>;
-  } else {
-    return '请先登录'
-  }
+	const handler = createSupaHandler();
+	const { user } = await handler.getUser();
+	if (user) {
+		return <>{props.children}</>;
+	} else {
+		return null;
+	}
 }

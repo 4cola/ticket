@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-02 17:02:39
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 14:22:18
+ * @LastEditTime: 2024-01-26 16:46:53
  * @FilePath: /ticket/app/dashboard/posts/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -75,7 +75,7 @@ const deployments: {
 
 function Header() {
 	return (
-		<div className="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between">
+		<div className="border-b border-gray-200 pb-5 mb-5 sm:flex sm:items-center sm:justify-between">
 			<h3 className="text-base font-semibold leading-6 text-gray-900">我的文章</h3>
 			<div className="mt-3 sm:ml-4 sm:mt-0">
 				<Link
@@ -106,54 +106,52 @@ export default async function Posts() {
 	if (!user) {
 		return null;
 	}
-	const { data: posts, error } = await handler.client
-		.from('posts_raw')
-		.select('title, excerpt, posts(slug), is_verified, created_at')
-		.eq('author_id', user.id);
-	console.log(posts);
-	console.log(error);
-	const rows = posts?.map((raw, i) => {
-		// console.log(post.posts)
-		const v = raw.is_verified && raw.posts?.slug ? 'verified' : 'unverified';
-		// console.log(post.post)
-		return (
-			<li key={i} className="relative flex items-center space-x-4 py-4">
-				<div className="min-w-0 flex-auto">
-					<div className="flex items-center gap-x-3">
-						<div className={clsx(statuses[v], 'flex-none rounded-full p-1')}>
-							<div className="h-2 w-2 rounded-full bg-current" />
+	const { data: posts, error } = await handler.client.from('posts').select('title, excerpt, status, created_at').eq('author_id', user.id);
+	const rows =
+		posts?.map((post, i) => {
+			const v = post.status === 'draft' ? 'verified' : 'unverified';
+			return (
+				<li key={i} className="relative flex items-center space-x-4 py-4">
+					<div className="min-w-0 flex-auto">
+						<div className="flex items-center gap-x-3">
+							<div className={clsx(statuses[v], 'flex-none rounded-full p-1')}>
+								<div className="h-2 w-2 rounded-full bg-current" />
+							</div>
+							<h2 className="min-w-0 text-sm font-semibold leading-6">
+								{/* <Link href={`/posts/${}`} className="flex gap-x-2"> */}
+								<span className="truncate">{post.title}</span>
+								{/* <span className="text-gray-400">/</span> */}
+								{/* <span className="whitespace-nowrap">{deployment.projectName}</span> */}
+								{/* <span className="absolute inset-0" /> */}
+								{/* </Link> */}
+							</h2>
 						</div>
-						<h2 className="min-w-0 text-sm font-semibold leading-6">
-							{/* <Link href={`/posts/${}`} className="flex gap-x-2"> */}
-							<span className="truncate">{raw.title}</span>
-							{/* <span className="text-gray-400">/</span> */}
-							{/* <span className="whitespace-nowrap">{deployment.projectName}</span> */}
-							{/* <span className="absolute inset-0" /> */}
-							{/* </Link> */}
-						</h2>
+						<p className="mt-1 truncate text-md text-gray-400">{post.excerpt}</p>
+						<div className="mt-1 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
+							<svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-300">
+								<circle cx={1} cy={1} r={1} />
+							</svg>
+							<p className="whitespace-nowrap">{post.created_at.slice(0, 10)}</p>
+						</div>
 					</div>
-					<p className="mt-1 truncate text-md text-gray-400">{raw.excerpt}</p>
-					<div className="mt-1 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
-						<svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-300">
-							<circle cx={1} cy={1} r={1} />
-						</svg>
-						<p className="whitespace-nowrap">{raw.created_at.slice(0, 10)}</p>
+					<div className={clsx(environments[v], 'rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset')}>
+						{v}
+						{/* {deployment.environment} */}
 					</div>
-				</div>
-				<div className={clsx(environments[v], 'rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset')}>
-					{v}
-					{/* {deployment.environment} */}
-				</div>
-				<ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-			</li>
-		);
-	});
+					<ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+				</li>
+			);
+		}) || [];
 	return (
 		<>
 			<Header />
-			<ul role="list" className="divide-y divide-black/5">
-				{rows}
-			</ul>
+			{rows.length > 0 ? (
+				<ul role="list" className="divide-y divide-black/5">
+					{rows}
+				</ul>
+			) : (
+				<p>还没有发布过的文章～</p>
+			)}
 		</>
 	);
 }
