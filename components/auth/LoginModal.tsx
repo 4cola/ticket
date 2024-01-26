@@ -62,7 +62,8 @@ const LoginModal = () => {
 					email: user.email,
 					avatar: user.user_metadata['avatar']
 				});
-				router.refresh();
+        router.push('/dashboard');
+				// router.refresh();
 			} else if (event === 'INITIAL_SESSION') {
 				//
 			}
