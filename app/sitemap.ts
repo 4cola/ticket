@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-10-11 16:31:45
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 14:03:31
+ * @LastEditTime: 2024-01-26 17:03:40
  * @FilePath: /ticket/app/sitemap.ts
  * @Description: dota2sites@gmail.com
  *
@@ -64,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		...sitemaps,
 		...(categories?.map((category) => {
 			return {
-				url: domainURL(`/posts/category/${category}`),
+				url: domainURL(`/posts/category/${category.slug}`),
 				lastModified: new Date()
 			};
 		}) ?? [])
