@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2023-12-26 16:31:32
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-26 14:55:56
+ * @LastEditTime: 2024-01-26 15:22:24
  * @FilePath: /ticket/components/layouts/Leftbar.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -27,8 +27,8 @@ type Navigation = {
 };
 
 const navigation: Navigation[] = [
-	{ name: '个人中心', href: '/dashboard', icon: 'HomeIcon', current: true }
-	// { name: '我的文章', href: '/dashboard/posts', icon: 'UsersIcon', current: false },
+	{ name: '个人中心', href: '/dashboard', icon: 'HomeIcon', current: true },
+	{ name: '我的文章', href: '/dashboard/posts', icon: 'UsersIcon', current: false },
 	// { name: 'Projects', href: '#', icon: 'FolderIcon', count: '12', current: false },
 	// { name: 'Calendar', href: '#', icon: 'CalendarIcon', count: '20+', current: false },
 	// { name: 'Documents', href: '#', icon: 'DocumentDuplicateIcon', current: false },
@@ -45,8 +45,6 @@ const secondaryNavigation = [
 export default function LeftBar() {
 	const pathname = usePathname();
 	const handler = createBrowserHandler();
-	// const pathname = '/dashboard'
-	// return 123
 	// return <Bar navigation={navigation} secondaryNavigation={secondaryNavigation} />
 
 	if (pathname.startsWith('/dashboard')) {

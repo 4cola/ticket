@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-04 16:43:41
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 15:05:18
+ * @LastEditTime: 2024-01-26 16:48:27
  * @FilePath: /ticket/components/posts/editor/EditorForm.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -67,14 +67,13 @@ const EditorForm = ({ uid, categories }: { uid: string; categories?: Category[] 
 		}
 		const converter = new showdown.Converter();
 		const html = converter.makeHtml(markdown).split(/\r?\n/).slice(1).join('\n');
-		const { error } = await supabase.from('posts_raw').insert({
+		const { error } = await supabase.from('posts').insert({
 			author_id: uid,
 			title: title,
-			markdown: markdown,
 			html: html,
+      slug: 'test',
 			excerpt: extractTextFromHtml(html, 250),
-			is_verified: false,
-			is_cn: true
+      status: 'draft'
 		});
 		if (error) {
 			pushNotification({
