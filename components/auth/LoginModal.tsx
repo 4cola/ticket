@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-08 13:51:22
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 15:04:42
+ * @LastEditTime: 2024-01-26 15:00:03
  * @FilePath: /ticket/components/auth/LoginModal.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -62,7 +62,8 @@ const LoginModal = () => {
 					email: user.email,
 					avatar: user.user_metadata['avatar']
 				});
-				router.refresh();
+        router.push('/dashboard');
+				// router.refresh();
 			} else if (event === 'INITIAL_SESSION') {
 				//
 			}
