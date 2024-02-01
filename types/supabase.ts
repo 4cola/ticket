@@ -57,6 +57,24 @@ export interface Database {
         }
         Relationships: []
       }
+      groups: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
       images: {
         Row: {
           created_at: string
@@ -192,79 +210,6 @@ export interface Database {
           }
         ]
       }
-      posts_raw: {
-        Row: {
-          author_id: string | null
-          created_at: string
-          excerpt: string
-          featured_image: string | null
-          html: string | null
-          id: number
-          is_verified: boolean
-          keywords: string[] | null
-          markdown: string | null
-          post_id: number | null
-          secrets: Json | null
-          slug: string | null
-          source: string | null
-          title: string
-        }
-        Insert: {
-          author_id?: string | null
-          created_at?: string
-          excerpt?: string
-          featured_image?: string | null
-          html?: string | null
-          id?: number
-          is_verified?: boolean
-          keywords?: string[] | null
-          markdown?: string | null
-          post_id?: number | null
-          secrets?: Json | null
-          slug?: string | null
-          source?: string | null
-          title?: string
-        }
-        Update: {
-          author_id?: string | null
-          created_at?: string
-          excerpt?: string
-          featured_image?: string | null
-          html?: string | null
-          id?: number
-          is_verified?: boolean
-          keywords?: string[] | null
-          markdown?: string | null
-          post_id?: number | null
-          secrets?: Json | null
-          slug?: string | null
-          source?: string | null
-          title?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "posts_raw_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_raw_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_raw_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "v_posts"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
       posts_tags: {
         Row: {
           created_at: string
@@ -335,6 +280,39 @@ export interface Database {
           slug?: string
         }
         Relationships: []
+      }
+      users_groups: {
+        Row: {
+          created_at: string
+          group_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          group_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          group_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_groups_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "users_groups_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
