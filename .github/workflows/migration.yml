@@ -24,7 +24,7 @@ jobs:
     - name: Link Supabase
       run: npx supabase link --project-ref=elftoojqpqugfbgqxiww
     - name: Supabase migration squash
-      run: echo Y | supabase migration squash --linked
+      run: echo Y | npx supabase migration squash --linked
     - name: Migration Supabase
       run: npx supabase db push --password=${{ secrets.DATABASE_PASSWORD }}
     # # - name: Deploy Supabase Functions
