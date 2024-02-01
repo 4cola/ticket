@@ -23,8 +23,8 @@ jobs:
       run: echo ${{ secrets.SUPABASE_ACCESS_TOKEN }} | npx supabase login
     - name: Link Supabase
       run: npx supabase link --project-ref=elftoojqpqugfbgqxiww
-    - name: Supabase migration squash
-      run: echo Y | npx supabase migration squash --db-url=postgres://postgres.elftoojqpqugfbgqxiww:${{ secrets.DATABASE_PASSWORD }}@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres
+    # - name: Supabase migration squash
+    #   run: echo Y | npx supabase migration squash --db-url=postgres://postgres.elftoojqpqugfbgqxiww:${{ secrets.DATABASE_PASSWORD }}@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres
       # run: echo Y | npx supabase migration squash --linked --password=${{ secrets.DATABASE_PASSWORD }}
     - name: Migration Supabase
       run: npx supabase db push --password=${{ secrets.DATABASE_PASSWORD }}
