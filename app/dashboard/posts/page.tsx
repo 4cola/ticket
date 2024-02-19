@@ -1,8 +1,8 @@
 /*
  * @Author: JinBlack
  * @Date: 2024-01-02 17:02:39
- * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-26 16:46:53
+ * @LastEditors: j4tmr black4jin@gmail.com
+ * @LastEditTime: 2024-02-19 16:07:26
  * @FilePath: /ticket/app/dashboard/posts/page.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -150,7 +150,7 @@ export default async function Posts() {
 					{rows}
 				</ul>
 			) : (
-				<p>还没有发布过的文章～</p>
+				<p>还没有发布过文章～</p>
 			)}
 		</>
 	);
