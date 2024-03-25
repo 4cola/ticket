@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-22 15:34:24
  * @LastEditors: JinBlack
- * @LastEditTime: 2024-01-24 11:28:43
+ * @LastEditTime: 2024-03-25 16:11:46
  * @FilePath: /ticket/next.config.js
  * @Description: black4jin@gmail.com
  *
@@ -15,8 +15,8 @@ const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 
 const nextConfig = {
   images: {
-    // disableStaticImages: true,
-		// unoptimized: true,
+    // unoptimized: true,
+    disableStaticImages: true,
 		dangerouslyAllowSVG: true,
 		loader: 'custom',
 		loaderFile: './image-loader.js',
