@@ -1,8 +1,8 @@
 /*
  * @Author: JinBlack
  * @Date: 2023-12-21 20:08:53
- * @LastEditors: JinBlack
- * @LastEditTime: 2023-12-21 20:08:53
+ * @LastEditors: j4tmr black4jin@gmail.com
+ * @LastEditTime: 2024-03-25 15:34:32
  * @FilePath: /4tmr/packages/next-shared/components/widgets/Categories.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -19,7 +19,7 @@ const Categories = ({
   className?: string;
 }) => {
   if (categories) {
-    const tagsLists = categories.map((category, i) => {
+    const categoriesLists = categories.map((category, i) => {
       return (
         <Link
           key={i}
@@ -40,7 +40,7 @@ const Categories = ({
           {/* <span className="flex-grow block border-t border-black"></span> */}
         </h2>
         <div className="tag-cloud flex justify-center flex-wrap gap-2 max-w-sm mx-auto mt-4">
-          {tagsLists}
+          {categoriesLists}
         </div>
       </div>
     );
