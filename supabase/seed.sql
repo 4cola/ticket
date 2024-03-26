@@ -152,7 +152,7 @@ WHERE
   );
 
 -- 默认权限逻辑
-DO $ $ DECLARE t VARCHAR;
+DO $$ DECLARE t VARCHAR;
 
 BEGIN FOR t IN
 SELECT
@@ -165,21 +165,21 @@ WHERE
 INSERT INTO
   permissions (table_name, operation)
 VALUES
-  (t, 'create'),
-  (t, 'read'),
+  (t, 'insert'),
+  (t, 'select'),
   (t, 'update'),
   (t, 'delete');
 
 END LOOP;
 
-END $ $;
+END $$;
 
 INSERT INTO
   "public"."groups" ("name")
 VALUES
   ('admin');
 
-DO $ $ DECLARE admin_group_id INT;
+DO $$ DECLARE admin_group_id INT;
 
 BEGIN -- 获取'admin'组的ID
 SELECT
@@ -198,4 +198,4 @@ SELECT
 FROM
   permissions;
 
-END $ $;
+END $$;
