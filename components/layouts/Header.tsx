@@ -8,7 +8,6 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 import { Fragment } from 'react';
-import defaultAvatar from '@/assets/images/avatar.jpeg';
 import { useAppContext } from '@/libs/store';
 import { createBrowserHandler } from '@/libs/supabase-browser';
 
@@ -84,7 +83,7 @@ const Avatar = ({ avatar }: { avatar?: string }) => {
 	return (
 		<Image
 			className="h-8 w-8 rounded-full"
-			src={avatar || defaultAvatar}
+			src={avatar || 'avatar.jpeg'}
 			priority={false}
 			alt="user avatar"
 			width={32}
