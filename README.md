@@ -1,9 +1,9 @@
 <!--
  * @Author: JinBlack
  * @Date: 2024-01-23 10:31:31
- * @LastEditors: JinBlack
- * @LastEditTime: 2024-03-27 11:35:18
- * @FilePath: /promo/README.md
+ * @LastEditors: j4tmr black4jin@gmail.com
+ * @LastEditTime: 2024-03-27 11:25:30
+ * @FilePath: /ticket/README.md
  * @Description: black4jin@gmail.com
  * 
  * Copyright (c) 2024 by 4tmr, All Rights Reserved. 
@@ -23,7 +23,7 @@
 ## How to begin
 
 ### Supabase
-- <a href="https://github.com/4cola/ticket-supabase" target="_blank">supabase仓库</a>
+- <a href="https://github.com/4cola/ticket-supabase" target="_blank">ticket-supabase</a>
 
 ### Deploy to Vercel
 
