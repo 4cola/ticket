@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-23 10:31:31
  * @LastEditors: j4tmr black4jin@gmail.com
- * @LastEditTime: 2024-03-27 10:01:04
+ * @LastEditTime: 2024-03-27 11:25:30
  * @FilePath: /ticket/README.md
  * @Description: black4jin@gmail.com
  * 
@@ -23,7 +23,7 @@
 ## How to begin
 
 ### Supabase
-- <a href="https://github.com/4cola/ticket-supabase" target="_blank">supabase仓库</a>
+- <a href="https://github.com/4cola/ticket-supabase" target="_blank">ticket-supabase</a>
 
 ### Deploy to Vercel
 
