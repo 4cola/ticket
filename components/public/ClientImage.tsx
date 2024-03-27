@@ -2,8 +2,8 @@
 /*
  * @Author: JinBlack
  * @Date: 2023-12-21 16:18:20
- * @LastEditors: JinBlack
- * @LastEditTime: 2024-03-25 16:18:49
+ * @LastEditors: j4tmr black4jin@gmail.com
+ * @LastEditTime: 2024-03-27 11:13:07
  * @FilePath: /ticket/components/public/ClientImage.tsx
  * @Description: dota2sites@gmail.com
  *
@@ -23,7 +23,7 @@ const ArticleListImage = (props: { src: string | null; className?: string; width
   const [imageUrl, setImageUrl] = useState<string | StaticImageData>(src || placeholderImage);
   return (
     <Image
-      src={imageUrl || 'blog-placeholder.png'}
+      src={imageUrl}
       placeholder='blur'
       blurDataURL={placeholderImage}
       alt="post featured image"
