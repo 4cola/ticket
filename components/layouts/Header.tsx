@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import { Fragment } from 'react';
 import { useAppContext } from '@/libs/store';
 import { createBrowserHandler } from '@/libs/supabase-browser';
+import { defaultAvatar } from '@/libs/helper';
 
 import { useLoginForm } from '../auth/LoginModal';
 
@@ -83,7 +84,7 @@ const Avatar = ({ avatar }: { avatar?: string }) => {
 	return (
 		<Image
 			className="h-8 w-8 rounded-full"
-			src={avatar || 'avatar.jpeg'}
+			src={avatar || defaultAvatar}
 			priority={false}
 			alt="user avatar"
 			width={32}
