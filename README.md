@@ -2,7 +2,7 @@
  * @Author: JinBlack
  * @Date: 2024-01-23 10:31:31
  * @LastEditors: j4tmr black4jin@gmail.com
- * @LastEditTime: 2024-02-19 17:15:45
+ * @LastEditTime: 2024-03-27 10:01:04
  * @FilePath: /ticket/README.md
  * @Description: black4jin@gmail.com
  * 
@@ -23,18 +23,7 @@
 ## How to begin
 
 ### Supabase
-1. Register a supabase account
-2. Create a new Organization
-3. Create a new project
-4. Go to https://supabase.com/dashboard/project/[ProjectID]/auth/url-configuration to set your Site URL
-5. Using supabase cli to init database
-   1. git clone https://github.com/4cola/ticket
-   2. cd supabase
-   3. <a href="https://supabase.com/docs/guides/cli/getting-started" target="_blank">install supabase cli</a>
-   4. login supabase ```supabase login```
-   5. link to project ```supabase link --project-ref [ProjectID]```
-   6. push migrations ```supabase db push --password=[DatabasePassword]```
-   7. Copy seed sqls from ./supabase/seed.sql to https://supabase.com/dashboard/project/[ProjectID]/sql/new and run
+- <a href="https://github.com/4cola/ticket-supabase" target="_blank">supabase仓库</a>
 
 ### Deploy to Vercel
 
